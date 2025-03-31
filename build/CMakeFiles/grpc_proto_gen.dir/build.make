@@ -66,33 +66,33 @@ include CMakeFiles/grpc_proto_gen.dir/compiler_depend.make
 # Include the progress variables for this target.
 include CMakeFiles/grpc_proto_gen.dir/progress.make
 
-CMakeFiles/grpc_proto_gen: hello.pb.cc
-CMakeFiles/grpc_proto_gen: hello.pb.h
-CMakeFiles/grpc_proto_gen: hello.grpc.pb.cc
-CMakeFiles/grpc_proto_gen: hello.grpc.pb.h
+CMakeFiles/grpc_proto_gen: data.pb.cc
+CMakeFiles/grpc_proto_gen: data.pb.h
+CMakeFiles/grpc_proto_gen: data.grpc.pb.cc
+CMakeFiles/grpc_proto_gen: data.grpc.pb.h
 
-hello.pb.cc: /Users/aksharmehta/SJSU\ COURSES/CMPE\ 275/grpc-project/protos/hello.proto
+data.pb.cc: /Users/aksharmehta/SJSU\ COURSES/CMPE\ 275/grpc-project/protos/data.proto
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Generating gRPC and Protobuf files"
 	/opt/homebrew/bin/cmake -E make_directory "/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/build"
-	/opt/homebrew/bin/cmake -E env /opt/homebrew/opt/protobuf/bin/protoc-29.3.0 "-I/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/protos" "--cpp_out=/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/build" "--grpc_out=/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/build" --plugin=protoc-gen-grpc=/opt/homebrew/Cellar/grpc/1.71.0/bin/grpc_cpp_plugin "/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/protos/hello.proto"
+	/opt/homebrew/bin/cmake -E env /opt/homebrew/opt/protobuf/bin/protoc-29.3.0 "-I/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/protos" "--cpp_out=/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/build" "--grpc_out=/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/build" --plugin=protoc-gen-grpc=/opt/homebrew/Cellar/grpc/1.71.0/bin/grpc_cpp_plugin "/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/protos/data.proto"
 
-hello.pb.h: hello.pb.cc
-	@$(CMAKE_COMMAND) -E touch_nocreate hello.pb.h
+data.pb.h: data.pb.cc
+	@$(CMAKE_COMMAND) -E touch_nocreate data.pb.h
 
-hello.grpc.pb.cc: hello.pb.cc
-	@$(CMAKE_COMMAND) -E touch_nocreate hello.grpc.pb.cc
+data.grpc.pb.cc: data.pb.cc
+	@$(CMAKE_COMMAND) -E touch_nocreate data.grpc.pb.cc
 
-hello.grpc.pb.h: hello.pb.cc
-	@$(CMAKE_COMMAND) -E touch_nocreate hello.grpc.pb.h
+data.grpc.pb.h: data.pb.cc
+	@$(CMAKE_COMMAND) -E touch_nocreate data.grpc.pb.h
 
 CMakeFiles/grpc_proto_gen.dir/codegen:
 .PHONY : CMakeFiles/grpc_proto_gen.dir/codegen
 
 grpc_proto_gen: CMakeFiles/grpc_proto_gen
-grpc_proto_gen: hello.grpc.pb.cc
-grpc_proto_gen: hello.grpc.pb.h
-grpc_proto_gen: hello.pb.cc
-grpc_proto_gen: hello.pb.h
+grpc_proto_gen: data.grpc.pb.cc
+grpc_proto_gen: data.grpc.pb.h
+grpc_proto_gen: data.pb.cc
+grpc_proto_gen: data.pb.h
 grpc_proto_gen: CMakeFiles/grpc_proto_gen.dir/build.make
 .PHONY : grpc_proto_gen
 

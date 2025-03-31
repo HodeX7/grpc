@@ -11,10 +11,10 @@ grpc-project/
 │   └── server.cpp
 ├── python/
 │   ├── client.py
-│   ├── hello_pb2.py
-│   └── hello_pb2_grpc.py
+│   ├── data_pb2.py
+│   └── data_pb2_grpc.py
 ├── protos/
-│   └── hello.proto
+│   └── data.proto
 ├── build/
 └── venv/
 ```
@@ -39,8 +39,8 @@ grpc-project/
 
    - **Problem**: Server not properly handling gRPC service implementation
    - **Solution**:
-     - Added proper namespace (`package hello;`) in proto file
-     - Implemented HelloServiceImpl class with SayHello method
+     - Added proper namespace (`package data;`) in proto file
+     - Implemented DataServiceImpl class with PushData method
      - Added error handling and logging in server code
 
 4. **Python Client Issues**
@@ -60,7 +60,7 @@ grpc-project/
      python -m grpc_tools.protoc -I./protos \
          --python_out=./python \
          --grpc_python_out=./python \
-         ./protos/hello.proto
+         ./protos/data.proto
      ```
 
 ### How to Run
@@ -92,39 +92,40 @@ python client.py
 
 - Server listens on `0.0.0.0:50051`
 - Client connects to server using insecure channel
-- Implements a simple "Hello" service:
-  - Client sends a name ("Akshar")
-  - Server responds with "Hello, Akshar"
-  - Successful bidirectional communication established
+- Implements a data push service:
+  - Client sends data messages with ID, payload, and timestamp
+  - Server logs received data and acknowledges receipt
+  - One-way communication (client to server)
 
 ### Key Files
 
-1. **hello.proto**
+1. **data.proto**
 
 ```protobuf
 syntax = "proto3";
-package hello;
+package data;
 
-service HelloService {
-  rpc SayHello (HelloRequest) returns (HelloReply);
+service DataService {
+  rpc PushData (DataMessage) returns (Empty); // One-way communication (no reply)
 }
 
-message HelloRequest {
-  string name = 1;
+message DataMessage {
+  int32 id = 1;          // Unique ID for the data
+  bytes payload = 2;      // Raw data (e.g., file contents)
+  string timestamp = 3;   // Time of data creation
 }
 
-message HelloReply {
-  string message = 1;
-}
+message Empty {}          // Empty response
 ```
 
 2. **server.cpp** (key parts)
 
 ```cpp
-class HelloServiceImpl final : public HelloService::Service {
-  Status SayHello(ServerContext* context, const HelloRequest* request, HelloReply* reply) override {
-    std::cout << "Received request from: " << request->name() << std::endl;
-    reply->set_message("Hello, " + request->name());
+class DataServiceImpl final : public DataService::Service {
+  Status PushData(ServerContext* context, const DataMessage* request, Empty* reply) override {
+    std::cout << "Received data [ID: " << request->id()
+              << ", Size: " << request->payload().size()
+              << " bytes, Time: " << request->timestamp() << "]\n";
     return Status::OK;
   }
 };
@@ -133,16 +134,111 @@ class HelloServiceImpl final : public HelloService::Service {
 3. **client.py** (key parts)
 
 ```python
+def generate_data(id):
+    return data_pb2.DataMessage(
+        id=id,
+        payload=b"Sample payload",  # Simulate binary data
+        timestamp=str(time.time())
+    )
+
 def run():
     channel = grpc.insecure_channel('localhost:50051')
-    stub = hello_pb2_grpc.HelloServiceStub(channel)
-    response = stub.SayHello(hello_pb2.HelloRequest(name='Akshar'))
-    print("Received response: " + response.message)
+    stub = data_pb2_grpc.DataServiceStub(channel)
+
+    # Send 3 data points
+    for i in range(1, 4):
+        data = generate_data(i)
+        stub.PushData(data)
+        print(f"Sent data ID: {i}")
 ```
 
 ### Next Steps
 
 - Implement secure communication using SSL/TLS
-- Add more complex service methods
-- Implement error handling and timeouts
+- Add data validation and error handling
+- Implement data persistence on server side
 - Add unit tests and integration tests
+- Add support for different types of data payloads
+
+## Step 2: Upgrading to Data Service Implementation
+
+### Changes Made
+
+1. **Proto File Update**
+
+   - Changed from `hello.proto` to `data.proto`
+   - Updated service definition to handle data messages
+   - Added new message types for data transfer
+
+2. **Server Implementation Changes**
+
+   - Updated server code to implement `DataService` instead of `HelloService`
+   - Added logging for received data messages
+   - Implemented one-way communication pattern
+
+3. **Client Implementation Changes**
+
+   - Updated client to send data messages instead of hello messages
+   - Added data generation function with ID, payload, and timestamp
+   - Implemented batch sending of multiple data points
+
+4. **Build System Updates**
+   - Updated CMakeLists.txt to use new proto file
+   - Modified protobuf generation paths
+   - Updated include paths and dependencies
+
+### New Functionality
+
+- One-way data transfer service
+- Support for binary payloads
+- Timestamp tracking for data messages
+- Batch processing capability
+- Detailed server-side logging
+
+### Technical Details
+
+1. **Data Message Structure**
+
+```protobuf
+message DataMessage {
+  int32 id = 1;          // Unique identifier for each message
+  bytes payload = 2;      // Binary data payload
+  string timestamp = 3;   // Creation timestamp
+}
+```
+
+2. **Server Logging**
+
+```cpp
+std::cout << "Received data [ID: " << request->id()
+          << ", Size: " << request->payload().size()
+          << " bytes, Time: " << request->timestamp() << "]\n";
+```
+
+3. **Client Data Generation**
+
+```python
+def generate_data(id):
+    return data_pb2.DataMessage(
+        id=id,
+        payload=b"Sample payload",  # Binary data
+        timestamp=str(time.time())
+    )
+```
+
+### Migration Process
+
+1. Created new proto file with data service definition
+2. Updated server implementation to handle data messages
+3. Modified client to generate and send data messages
+4. Updated build system configuration
+5. Regenerated protobuf files for both C++ and Python
+6. Updated documentation to reflect changes
+
+### Next Steps for Step 2
+
+- Implement data validation on server side
+- Add support for different payload types
+- Implement data persistence
+- Add error handling for malformed data
+- Implement data compression for large payloads

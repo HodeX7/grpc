@@ -1,9 +1,9 @@
 file(REMOVE_RECURSE
   "CMakeFiles/grpc_proto_gen"
-  "hello.grpc.pb.cc"
-  "hello.grpc.pb.h"
-  "hello.pb.cc"
-  "hello.pb.h"
+  "data.grpc.pb.cc"
+  "data.grpc.pb.h"
+  "data.pb.cc"
+  "data.pb.h"
 )
 
 # Per-language clean rules from dependency scanning.

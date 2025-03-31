@@ -69,19 +69,19 @@ include CMakeFiles/server.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/server.dir/flags.make
 
-hello.pb.cc: /Users/aksharmehta/SJSU\ COURSES/CMPE\ 275/grpc-project/protos/hello.proto
+data.pb.cc: /Users/aksharmehta/SJSU\ COURSES/CMPE\ 275/grpc-project/protos/data.proto
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Generating gRPC and Protobuf files"
 	/opt/homebrew/bin/cmake -E make_directory "/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/build"
-	/opt/homebrew/bin/cmake -E env /opt/homebrew/opt/protobuf/bin/protoc-29.3.0 "-I/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/protos" "--cpp_out=/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/build" "--grpc_out=/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/build" --plugin=protoc-gen-grpc=/opt/homebrew/Cellar/grpc/1.71.0/bin/grpc_cpp_plugin "/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/protos/hello.proto"
+	/opt/homebrew/bin/cmake -E env /opt/homebrew/opt/protobuf/bin/protoc-29.3.0 "-I/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/protos" "--cpp_out=/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/build" "--grpc_out=/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/build" --plugin=protoc-gen-grpc=/opt/homebrew/Cellar/grpc/1.71.0/bin/grpc_cpp_plugin "/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/protos/data.proto"
 
-hello.pb.h: hello.pb.cc
-	@$(CMAKE_COMMAND) -E touch_nocreate hello.pb.h
+data.pb.h: data.pb.cc
+	@$(CMAKE_COMMAND) -E touch_nocreate data.pb.h
 
-hello.grpc.pb.cc: hello.pb.cc
-	@$(CMAKE_COMMAND) -E touch_nocreate hello.grpc.pb.cc
+data.grpc.pb.cc: data.pb.cc
+	@$(CMAKE_COMMAND) -E touch_nocreate data.grpc.pb.cc
 
-hello.grpc.pb.h: hello.pb.cc
-	@$(CMAKE_COMMAND) -E touch_nocreate hello.grpc.pb.h
+data.grpc.pb.h: data.pb.cc
+	@$(CMAKE_COMMAND) -E touch_nocreate data.grpc.pb.h
 
 CMakeFiles/server.dir/codegen:
 .PHONY : CMakeFiles/server.dir/codegen
@@ -100,55 +100,54 @@ CMakeFiles/server.dir/server.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/server.dir/server.cpp.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/cpp/server.cpp" -o CMakeFiles/server.dir/server.cpp.s
 
-CMakeFiles/server.dir/hello.pb.cc.o: CMakeFiles/server.dir/flags.make
-CMakeFiles/server.dir/hello.pb.cc.o: hello.pb.cc
-CMakeFiles/server.dir/hello.pb.cc.o: CMakeFiles/server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/server.dir/hello.pb.cc.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/server.dir/hello.pb.cc.o -MF CMakeFiles/server.dir/hello.pb.cc.o.d -o CMakeFiles/server.dir/hello.pb.cc.o -c "/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/build/hello.pb.cc"
+CMakeFiles/server.dir/data.pb.cc.o: CMakeFiles/server.dir/flags.make
+CMakeFiles/server.dir/data.pb.cc.o: data.pb.cc
+CMakeFiles/server.dir/data.pb.cc.o: CMakeFiles/server.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/server.dir/data.pb.cc.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/server.dir/data.pb.cc.o -MF CMakeFiles/server.dir/data.pb.cc.o.d -o CMakeFiles/server.dir/data.pb.cc.o -c "/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/build/data.pb.cc"
 
-CMakeFiles/server.dir/hello.pb.cc.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/server.dir/hello.pb.cc.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/build/hello.pb.cc" > CMakeFiles/server.dir/hello.pb.cc.i
+CMakeFiles/server.dir/data.pb.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/server.dir/data.pb.cc.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/build/data.pb.cc" > CMakeFiles/server.dir/data.pb.cc.i
 
-CMakeFiles/server.dir/hello.pb.cc.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/server.dir/hello.pb.cc.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/build/hello.pb.cc" -o CMakeFiles/server.dir/hello.pb.cc.s
+CMakeFiles/server.dir/data.pb.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/server.dir/data.pb.cc.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/build/data.pb.cc" -o CMakeFiles/server.dir/data.pb.cc.s
 
-CMakeFiles/server.dir/hello.grpc.pb.cc.o: CMakeFiles/server.dir/flags.make
-CMakeFiles/server.dir/hello.grpc.pb.cc.o: hello.grpc.pb.cc
-CMakeFiles/server.dir/hello.grpc.pb.cc.o: CMakeFiles/server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/server.dir/hello.grpc.pb.cc.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/server.dir/hello.grpc.pb.cc.o -MF CMakeFiles/server.dir/hello.grpc.pb.cc.o.d -o CMakeFiles/server.dir/hello.grpc.pb.cc.o -c "/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/build/hello.grpc.pb.cc"
+CMakeFiles/server.dir/data.grpc.pb.cc.o: CMakeFiles/server.dir/flags.make
+CMakeFiles/server.dir/data.grpc.pb.cc.o: data.grpc.pb.cc
+CMakeFiles/server.dir/data.grpc.pb.cc.o: CMakeFiles/server.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/server.dir/data.grpc.pb.cc.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/server.dir/data.grpc.pb.cc.o -MF CMakeFiles/server.dir/data.grpc.pb.cc.o.d -o CMakeFiles/server.dir/data.grpc.pb.cc.o -c "/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/build/data.grpc.pb.cc"
 
-CMakeFiles/server.dir/hello.grpc.pb.cc.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/server.dir/hello.grpc.pb.cc.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/build/hello.grpc.pb.cc" > CMakeFiles/server.dir/hello.grpc.pb.cc.i
+CMakeFiles/server.dir/data.grpc.pb.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/server.dir/data.grpc.pb.cc.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/build/data.grpc.pb.cc" > CMakeFiles/server.dir/data.grpc.pb.cc.i
 
-CMakeFiles/server.dir/hello.grpc.pb.cc.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/server.dir/hello.grpc.pb.cc.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/build/hello.grpc.pb.cc" -o CMakeFiles/server.dir/hello.grpc.pb.cc.s
+CMakeFiles/server.dir/data.grpc.pb.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/server.dir/data.grpc.pb.cc.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/build/data.grpc.pb.cc" -o CMakeFiles/server.dir/data.grpc.pb.cc.s
 
 # Object files for target server
 server_OBJECTS = \
 "CMakeFiles/server.dir/server.cpp.o" \
-"CMakeFiles/server.dir/hello.pb.cc.o" \
-"CMakeFiles/server.dir/hello.grpc.pb.cc.o"
+"CMakeFiles/server.dir/data.pb.cc.o" \
+"CMakeFiles/server.dir/data.grpc.pb.cc.o"
 
 # External object files for target server
 server_EXTERNAL_OBJECTS =
 
 server: CMakeFiles/server.dir/server.cpp.o
-server: CMakeFiles/server.dir/hello.pb.cc.o
-server: CMakeFiles/server.dir/hello.grpc.pb.cc.o
+server: CMakeFiles/server.dir/data.pb.cc.o
+server: CMakeFiles/server.dir/data.grpc.pb.cc.o
 server: CMakeFiles/server.dir/build.make
 server: /opt/homebrew/opt/grpc/lib/libgrpc++_reflection.1.71.0.dylib
 server: /opt/homebrew/opt/grpc/lib/libgrpc++.1.71.0.dylib
 server: /opt/homebrew/opt/protobuf/lib/libprotobuf.29.3.0.dylib
-server: /opt/homebrew/lib/libabsl_leak_check.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_die_if_null.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_log_initialize.2407.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_die_if_null.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_log_initialize.2501.0.0.dylib
 server: /opt/homebrew/opt/grpc/lib/libgrpc.46.0.0.dylib
-server: /opt/homebrew/lib/libabsl_statusor.2407.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_statusor.2501.0.0.dylib
 server: /opt/homebrew/opt/grpc/lib/libupb_json_lib.46.0.0.dylib
 server: /opt/homebrew/opt/grpc/lib/libupb_textformat_lib.46.0.0.dylib
 server: /opt/homebrew/opt/grpc/lib/libupb_mini_descriptor_lib.46.0.0.dylib
@@ -157,85 +156,88 @@ server: /opt/homebrew/opt/grpc/lib/libutf8_range_lib.46.0.0.dylib
 server: /opt/homebrew/opt/grpc/lib/libupb_message_lib.46.0.0.dylib
 server: /opt/homebrew/opt/grpc/lib/libupb_base_lib.46.0.0.dylib
 server: /opt/homebrew/opt/grpc/lib/libupb_mem_lib.46.0.0.dylib
-server: /opt/homebrew/lib/libre2.11.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libre2.11.0.0.dylib
 server: /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk/usr/lib/libz.tbd
-server: /opt/homebrew/lib/libcares.2.19.3.dylib
+server: /Users/aksharmehta/miniconda3/lib/libcares.2.6.1.dylib
 server: /opt/homebrew/opt/grpc/lib/libgpr.46.0.0.dylib
-server: /opt/homebrew/lib/libabsl_flags_internal.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_flags_reflection.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_raw_hash_set.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_hashtablez_sampler.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_flags_config.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_flags_program_name.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_flags_private_handle_accessor.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_flags_commandlineflag.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_flags_commandlineflag_internal.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_random_distributions.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_random_seed_sequences.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_random_internal_pool_urbg.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_random_internal_randen.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_random_internal_randen_hwaes.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_random_internal_randen_hwaes_impl.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_random_internal_randen_slow.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_random_internal_platform.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_random_internal_seed_material.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_random_seed_gen_exception.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_status.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_cord.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_cordz_info.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_cord_internal.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_cordz_functions.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_exponential_biased.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_cordz_handle.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_crc_cord_state.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_crc32c.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_crc_internal.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_crc_cpu_detect.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_flags_marshalling.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_log_internal_check_op.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_log_internal_conditions.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_log_internal_message.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_strerror.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_log_internal_nullguard.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_examine_stack.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_log_internal_format.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_str_format_internal.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_log_internal_proto.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_log_internal_log_sink_set.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_log_globals.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_hash.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_bad_variant_access.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_city.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_low_level_hash.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_vlog_config_internal.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_bad_optional_access.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_log_internal_fnmatch.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_synchronization.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_stacktrace.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_symbolize.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_debugging_internal.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_demangle_internal.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_demangle_rust.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_decode_rust_punycode.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_utf8_for_code_point.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_graphcycles_internal.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_kernel_timeout_internal.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_malloc_internal.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_log_internal_globals.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_log_sink.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_log_entry.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_time.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_civil_time.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_time_zone.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_strings.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_int128.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_strings_internal.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_string_view.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_base.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_spinlock_wait.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_throw_delegate.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_raw_logging_internal.2407.0.0.dylib
-server: /opt/homebrew/lib/libabsl_log_severity.2407.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_flags_internal.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_flags_reflection.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_raw_hash_set.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_hashtablez_sampler.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_flags_config.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_flags_program_name.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_flags_private_handle_accessor.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_flags_commandlineflag.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_flags_commandlineflag_internal.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_random_distributions.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_random_seed_sequences.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_random_internal_pool_urbg.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_random_internal_randen.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_random_internal_randen_hwaes.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_random_internal_randen_hwaes_impl.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_random_internal_randen_slow.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_random_internal_platform.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_random_internal_seed_material.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_random_seed_gen_exception.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_status.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_cord.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_cordz_info.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_cord_internal.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_cordz_functions.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_exponential_biased.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_cordz_handle.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_crc_cord_state.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_crc32c.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_crc_internal.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_crc_cpu_detect.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_flags_marshalling.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_log_internal_check_op.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_leak_check.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_log_internal_conditions.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_log_internal_message.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_strerror.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_log_internal_nullguard.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_examine_stack.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_log_internal_format.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_str_format_internal.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_log_internal_structured_proto.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_log_internal_proto.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_log_internal_log_sink_set.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_log_globals.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_hash.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_bad_variant_access.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_city.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_low_level_hash.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_vlog_config_internal.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_bad_optional_access.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_log_internal_fnmatch.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_synchronization.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_stacktrace.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_symbolize.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_debugging_internal.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_demangle_internal.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_demangle_rust.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_decode_rust_punycode.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_utf8_for_code_point.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_graphcycles_internal.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_kernel_timeout_internal.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_malloc_internal.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_tracing_internal.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_log_internal_globals.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_log_sink.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_log_entry.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_time.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_civil_time.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_time_zone.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_strings.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_int128.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_strings_internal.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_string_view.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_base.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_spinlock_wait.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_throw_delegate.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_raw_logging_internal.2501.0.0.dylib
+server: /Users/aksharmehta/miniconda3/lib/libabsl_log_severity.2501.0.0.dylib
 server: /opt/homebrew/Cellar/openssl@1.1/1.1.1w/lib/libssl.dylib
 server: /opt/homebrew/Cellar/openssl@1.1/1.1.1w/lib/libcrypto.dylib
 server: /opt/homebrew/opt/grpc/lib/libaddress_sorting.46.0.0.dylib
@@ -251,10 +253,10 @@ CMakeFiles/server.dir/clean:
 	$(CMAKE_COMMAND) -P CMakeFiles/server.dir/cmake_clean.cmake
 .PHONY : CMakeFiles/server.dir/clean
 
-CMakeFiles/server.dir/depend: hello.grpc.pb.cc
-CMakeFiles/server.dir/depend: hello.grpc.pb.h
-CMakeFiles/server.dir/depend: hello.pb.cc
-CMakeFiles/server.dir/depend: hello.pb.h
+CMakeFiles/server.dir/depend: data.grpc.pb.cc
+CMakeFiles/server.dir/depend: data.grpc.pb.h
+CMakeFiles/server.dir/depend: data.pb.cc
+CMakeFiles/server.dir/depend: data.pb.h
 	cd "/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/build" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/cpp" "/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/cpp" "/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/build" "/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/build" "/Users/aksharmehta/SJSU COURSES/CMPE 275/grpc-project/build/CMakeFiles/server.dir/DependInfo.cmake" "--color=$(COLOR)"
 .PHONY : CMakeFiles/server.dir/depend
 

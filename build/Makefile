@@ -142,53 +142,53 @@ server/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/build
 .PHONY : server/fast
 
-hello.grpc.pb.o: hello.grpc.pb.cc.o
-.PHONY : hello.grpc.pb.o
+data.grpc.pb.o: data.grpc.pb.cc.o
+.PHONY : data.grpc.pb.o
 
 # target to build an object file
-hello.grpc.pb.cc.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/hello.grpc.pb.cc.o
-.PHONY : hello.grpc.pb.cc.o
+data.grpc.pb.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/data.grpc.pb.cc.o
+.PHONY : data.grpc.pb.cc.o
 
-hello.grpc.pb.i: hello.grpc.pb.cc.i
-.PHONY : hello.grpc.pb.i
+data.grpc.pb.i: data.grpc.pb.cc.i
+.PHONY : data.grpc.pb.i
 
 # target to preprocess a source file
-hello.grpc.pb.cc.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/hello.grpc.pb.cc.i
-.PHONY : hello.grpc.pb.cc.i
+data.grpc.pb.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/data.grpc.pb.cc.i
+.PHONY : data.grpc.pb.cc.i
 
-hello.grpc.pb.s: hello.grpc.pb.cc.s
-.PHONY : hello.grpc.pb.s
+data.grpc.pb.s: data.grpc.pb.cc.s
+.PHONY : data.grpc.pb.s
 
 # target to generate assembly for a file
-hello.grpc.pb.cc.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/hello.grpc.pb.cc.s
-.PHONY : hello.grpc.pb.cc.s
+data.grpc.pb.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/data.grpc.pb.cc.s
+.PHONY : data.grpc.pb.cc.s
 
-hello.pb.o: hello.pb.cc.o
-.PHONY : hello.pb.o
+data.pb.o: data.pb.cc.o
+.PHONY : data.pb.o
 
 # target to build an object file
-hello.pb.cc.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/hello.pb.cc.o
-.PHONY : hello.pb.cc.o
+data.pb.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/data.pb.cc.o
+.PHONY : data.pb.cc.o
 
-hello.pb.i: hello.pb.cc.i
-.PHONY : hello.pb.i
+data.pb.i: data.pb.cc.i
+.PHONY : data.pb.i
 
 # target to preprocess a source file
-hello.pb.cc.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/hello.pb.cc.i
-.PHONY : hello.pb.cc.i
+data.pb.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/data.pb.cc.i
+.PHONY : data.pb.cc.i
 
-hello.pb.s: hello.pb.cc.s
-.PHONY : hello.pb.s
+data.pb.s: data.pb.cc.s
+.PHONY : data.pb.s
 
 # target to generate assembly for a file
-hello.pb.cc.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/hello.pb.cc.s
-.PHONY : hello.pb.cc.s
+data.pb.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/data.pb.cc.s
+.PHONY : data.pb.cc.s
 
 server.o: server.cpp.o
 .PHONY : server.o
@@ -224,12 +224,12 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... grpc_proto_gen"
 	@echo "... server"
-	@echo "... hello.grpc.pb.o"
-	@echo "... hello.grpc.pb.i"
-	@echo "... hello.grpc.pb.s"
-	@echo "... hello.pb.o"
-	@echo "... hello.pb.i"
-	@echo "... hello.pb.s"
+	@echo "... data.grpc.pb.o"
+	@echo "... data.grpc.pb.i"
+	@echo "... data.grpc.pb.s"
+	@echo "... data.pb.o"
+	@echo "... data.pb.i"
+	@echo "... data.pb.s"
 	@echo "... server.o"
 	@echo "... server.i"
 	@echo "... server.s"

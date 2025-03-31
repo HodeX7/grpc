@@ -23,13 +23,13 @@ get_target_property(PROTOC_PATH protobuf::protoc LOCATION)
 
 # Set proto file paths
 get_filename_component(PROTO_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../protos" ABSOLUTE)
-get_filename_component(PROTO_FILE "${PROTO_PATH}/hello.proto" ABSOLUTE)
+get_filename_component(PROTO_FILE "${PROTO_PATH}/data.proto" ABSOLUTE)
 
 # Generate protobuf files
-set(PROTO_SRCS "${CMAKE_CURRENT_BINARY_DIR}/hello.pb.cc")
-set(PROTO_HDRS "${CMAKE_CURRENT_BINARY_DIR}/hello.pb.h")
-set(GRPC_SRCS "${CMAKE_CURRENT_BINARY_DIR}/hello.grpc.pb.cc")
-set(GRPC_HDRS "${CMAKE_CURRENT_BINARY_DIR}/hello.grpc.pb.h")
+set(PROTO_SRCS "${CMAKE_CURRENT_BINARY_DIR}/data.pb.cc")
+set(PROTO_HDRS "${CMAKE_CURRENT_BINARY_DIR}/data.pb.h")
+set(GRPC_SRCS "${CMAKE_CURRENT_BINARY_DIR}/data.grpc.pb.cc")
+set(GRPC_HDRS "${CMAKE_CURRENT_BINARY_DIR}/data.grpc.pb.h")
 
 # Custom command to generate protobuf and gRPC code
 add_custom_command(
