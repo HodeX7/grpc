@@ -242,3 +242,54 @@ def generate_data(id):
 - Implement data persistence
 - Add error handling for malformed data
 - Implement data compression for large payloads
+
+## Step 3: Multi-Node Architecture Implementation
+
+### Changes Made
+
+1. **Extended the system by adding Node C and Node D**
+2. **Implemented round-robin forwarding mechanism in Node B**
+3. **Added configuration files for all nodes:**
+   - Node A: Configures target server (Node B)
+   - Node B: Configures forwarding to Nodes C and D
+   - Node C and D: Basic node configurations as leaf nodes
+
+### Issues and Solutions:
+
+1. **Build Issues**:
+
+   - Fixed protobuf generation command in CMakeLists.txt
+   - Resolved linking issues with Abseil libraries
+   - Added proper M1-specific configurations for macOS
+
+2. **Configuration Issues**:
+
+   - Fixed empty config files for Node C and D
+   - Implemented proper JSON structure for all node configurations
+   - Added error handling for config file loading
+
+3. **Terminal Management**:
+   - Improved terminal window management for better visibility
+   - Fixed path handling with spaces in directory names
+   - Added proper delays between node startups
+
+### Current Architecture:
+
+- Node A (Python client): Sends data to Node B
+- Node B (C++ server): Receives data and forwards alternately to C and D
+- Node C (C++ server): Receives data with odd IDs
+- Node D (C++ server): Receives data with even IDs
+
+### Port Configuration:
+
+- Node A: Client only (no port)
+- Node B: Server on port 50051
+- Node C: Server on port 50052
+- Node D: Server on port 50053
+
+### Next Steps:
+
+1. Implement error handling and recovery mechanisms
+2. Add monitoring and metrics collection
+3. Implement data persistence
+4. Add load balancing capabilities
