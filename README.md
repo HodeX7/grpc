@@ -558,3 +558,40 @@ In this milestone, we implemented and integrated shared memory functionality wit
 8. **Monitoring and Maintenance**
    - Set up monitoring tools to track the performance and health of the system in real-time.
    - Establish maintenance procedures to handle potential issues and ensure system reliability.
+
+## Step: Implementing Node E and Routing Data from Nodes C and D to E
+
+### Overview
+
+In this step, we focused on implementing Node E, which serves as a destination for data forwarded from Nodes C and D. This integration enhances the overall functionality of the overlay network by ensuring that data is processed and stored efficiently.
+
+### Implementation Details
+
+1. **Node E Implementation**:
+
+   - A new C++ server was created for Node E, which listens on port 50054 and receives data from Nodes C and D.
+   - The server is designed to log the received data and can be extended to store it as needed.
+
+2. **Routing Logic in Nodes C and D**:
+
+   - Both Node C and Node D were updated to include logic for forwarding data to Node E based on a hashing rule:
+     ```cpp
+     int hash = request->id() % 3;
+     if (hash != node_id) { // Forward to Node E if not responsible
+         // Forwarding logic
+     }
+     ```
+   - This ensures that data is distributed across the nodes effectively, with Node E handling a subset of the data.
+
+3. **Data Uniqueness Checks**:
+   - Each node tracks stored IDs using `std::unordered_set<int> stored_ids;` to prevent duplicate entries.
+   - Before storing or forwarding data, each node checks if the ID already exists.
+
+### Testing
+
+- After implementing Node E and updating Nodes C and D, we tested the data flow by sending messages from Node A to Node B, which were then forwarded to Nodes C and D, and finally to Node E.
+- The system was verified to ensure that no duplicate IDs were stored across the nodes.
+
+### Conclusion
+
+This step successfully integrated Node E into the overlay network and established routing logic for data from Nodes C and D. The next steps will focus on implementing monitoring capabilities and ensuring data integrity across the network.

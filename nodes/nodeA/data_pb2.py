@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\ndata.proto\x12\x04\x64\x61ta\"=\n\x0b\x44\x61taMessage\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0f\n\x07payload\x18\x02 \x01(\x0c\x12\x11\n\ttimestamp\x18\x03 \x01(\t\"\x07\n\x05\x45mpty\"G\n\x0bSharedState\x12\x0f\n\x07\x63ounter\x18\x01 \x01(\x05\x12\x13\n\x0blast_target\x18\x02 \x01(\x05\x12\x12\n\nrecent_ids\x18\x03 \x03(\x05\x32k\n\x0b\x44\x61taService\x12*\n\x08PushData\x12\x11.data.DataMessage\x1a\x0b.data.Empty\x12\x30\n\x0eGetSharedState\x12\x0b.data.Empty\x1a\x11.data.SharedStateb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\ndata.proto\x12\x04\x64\x61ta\"=\n\x0b\x44\x61taMessage\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0f\n\x07payload\x18\x02 \x01(\x0c\x12\x11\n\ttimestamp\x18\x03 \x01(\t\"\x07\n\x05\x45mpty\"G\n\x0bSharedState\x12\x0f\n\x07\x63ounter\x18\x01 \x01(\x05\x12\x13\n\x0blast_target\x18\x02 \x01(\x05\x12\x12\n\nrecent_ids\x18\x03 \x03(\x05\"\x15\n\x06IDList\x12\x0b\n\x03ids\x18\x01 \x03(\x05\x32\x96\x01\n\x0b\x44\x61taService\x12*\n\x08PushData\x12\x11.data.DataMessage\x1a\x0b.data.Empty\x12\x30\n\x0eGetSharedState\x12\x0b.data.Empty\x1a\x11.data.SharedState\x12)\n\x0cGetStoredIDs\x12\x0b.data.Empty\x1a\x0c.data.IDListb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -37,6 +37,8 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_EMPTY']._serialized_end=90
   _globals['_SHAREDSTATE']._serialized_start=92
   _globals['_SHAREDSTATE']._serialized_end=163
-  _globals['_DATASERVICE']._serialized_start=165
-  _globals['_DATASERVICE']._serialized_end=272
+  _globals['_IDLIST']._serialized_start=165
+  _globals['_IDLIST']._serialized_end=186
+  _globals['_DATASERVICE']._serialized_start=189
+  _globals['_DATASERVICE']._serialized_end=339
 # @@protoc_insertion_point(module_scope)

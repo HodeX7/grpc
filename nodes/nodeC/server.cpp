@@ -3,6 +3,9 @@
 #include <iostream>
 #include <fstream>
 #include <nlohmann/json.hpp>
+#include <unordered_set>
+#include <unistd.h>
+#include <limits.h>
 
 using grpc::Server;
 using grpc::ServerBuilder;
@@ -11,17 +14,42 @@ using grpc::Status;
 using data::DataMessage;
 using data::Empty;
 using data::DataService;
+
 using json = nlohmann::json;
 
 class DataServiceImpl final : public DataService::Service {
-  Status PushData(ServerContext* context, const DataMessage* request, Empty* reply) override {
-    std::cout << "NodeC: Received data ID " << request->id() << "\n";
-    return Status::OK;
-  }
+private:
+    std::unordered_set<int> stored_ids;  // Declare stored_ids to track unique IDs
+
+public:
+    Status PushData(ServerContext* context, const DataMessage* request, Empty* reply) override {
+        if (stored_ids.find(request->id()) != stored_ids.end()) {
+            return Status(grpc::ALREADY_EXISTS, "Duplicate ID");
+        }
+        stored_ids.insert(request->id());
+
+        int hash = request->id() % 3;
+
+        if (hash != 1) { // Not C's responsibility
+            // Forward to Node E
+            auto channel = grpc::CreateChannel("localhost:50054", grpc::InsecureChannelCredentials());
+            std::unique_ptr<DataService::Stub> client(DataService::NewStub(channel));
+            grpc::ClientContext client_context;  // Create a ClientContext
+            client->PushData(&client_context, *request, reply);  // Pass the ClientContext
+        } else {
+            // Store locally
+            std::cout << "Node C: Stored ID " << request->id() << "\n";
+        }
+        return Status::OK;
+    }
 };
 
 json load_config() {
     std::ifstream f("config.json");
+    if (!f.is_open()) {
+        std::cerr << "Error: Could not open config.json" << std::endl;
+        throw std::runtime_error("Could not open config.json");
+    }
     return json::parse(f);
 }
 
@@ -31,7 +59,14 @@ int main() {
         json config = load_config();
         std::string server_address("0.0.0.0:50052");
         
-        std::cout << "NodeC: Starting server on " << server_address << std::endl;
+        char cwd[PATH_MAX];
+        if (getcwd(cwd, sizeof(cwd)) != NULL) {
+            std::cout << "Current working dir: " << cwd << std::endl;
+        } else {
+            perror("getcwd() error");
+        }
+        
+        std::cout << "Node C: Starting server on " << server_address << std::endl;
 
         DataServiceImpl service;
         ServerBuilder builder;
@@ -39,7 +74,7 @@ int main() {
         builder.RegisterService(&service);
         std::unique_ptr<Server> server(builder.BuildAndStart());
         
-        std::cout << "NodeC: Server started successfully" << std::endl;
+        std::cout << "Node C: Server started successfully" << std::endl;
         server->Wait();
         
     } catch (const std::exception& e) {
@@ -48,4 +83,4 @@ int main() {
     }
     
     return 0;
-} 
+}

@@ -24,6 +24,7 @@ namespace data {
 static const char* DataService_method_names[] = {
   "/data.DataService/PushData",
   "/data.DataService/GetSharedState",
+  "/data.DataService/GetStoredIDs",
 };
 
 std::unique_ptr< DataService::Stub> DataService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -35,6 +36,7 @@ std::unique_ptr< DataService::Stub> DataService::NewStub(const std::shared_ptr< 
 DataService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options)
   : channel_(channel), rpcmethod_PushData_(DataService_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_GetSharedState_(DataService_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetStoredIDs_(DataService_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status DataService::Stub::PushData(::grpc::ClientContext* context, const ::data::DataMessage& request, ::data::Empty* response) {
@@ -83,6 +85,29 @@ void DataService::Stub::async::GetSharedState(::grpc::ClientContext* context, co
   return result;
 }
 
+::grpc::Status DataService::Stub::GetStoredIDs(::grpc::ClientContext* context, const ::data::Empty& request, ::data::IDList* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::data::Empty, ::data::IDList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetStoredIDs_, context, request, response);
+}
+
+void DataService::Stub::async::GetStoredIDs(::grpc::ClientContext* context, const ::data::Empty* request, ::data::IDList* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::data::Empty, ::data::IDList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetStoredIDs_, context, request, response, std::move(f));
+}
+
+void DataService::Stub::async::GetStoredIDs(::grpc::ClientContext* context, const ::data::Empty* request, ::data::IDList* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetStoredIDs_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::data::IDList>* DataService::Stub::PrepareAsyncGetStoredIDsRaw(::grpc::ClientContext* context, const ::data::Empty& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::data::IDList, ::data::Empty, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetStoredIDs_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::data::IDList>* DataService::Stub::AsyncGetStoredIDsRaw(::grpc::ClientContext* context, const ::data::Empty& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetStoredIDsRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 DataService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       DataService_method_names[0],
@@ -104,6 +129,16 @@ DataService::Service::Service() {
              ::data::SharedState* resp) {
                return service->GetSharedState(ctx, req, resp);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      DataService_method_names[2],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< DataService::Service, ::data::Empty, ::data::IDList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](DataService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::data::Empty* req,
+             ::data::IDList* resp) {
+               return service->GetStoredIDs(ctx, req, resp);
+             }, this)));
 }
 
 DataService::Service::~Service() {
@@ -117,6 +152,13 @@ DataService::Service::~Service() {
 }
 
 ::grpc::Status DataService::Service::GetSharedState(::grpc::ServerContext* context, const ::data::Empty* request, ::data::SharedState* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status DataService::Service::GetStoredIDs(::grpc::ServerContext* context, const ::data::Empty* request, ::data::IDList* response) {
   (void) context;
   (void) request;
   (void) response;

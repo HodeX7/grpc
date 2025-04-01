@@ -5,6 +5,7 @@ package data;
 service DataService {
   rpc PushData (DataMessage) returns (Empty);
   rpc GetSharedState (Empty) returns (SharedState);
+  rpc GetStoredIDs(Empty) returns (IDList);
 }
 
 message DataMessage {
@@ -20,3 +21,7 @@ message SharedState {
   int32 last_target = 2; 
   repeated int32 recent_ids = 3; 
 }          
+
+ message IDList {
+       repeated int32 ids = 1;
+   }

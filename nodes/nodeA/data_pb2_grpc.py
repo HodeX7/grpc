@@ -44,6 +44,11 @@ class DataServiceStub(object):
                 request_serializer=data__pb2.Empty.SerializeToString,
                 response_deserializer=data__pb2.SharedState.FromString,
                 _registered_method=True)
+        self.GetStoredIDs = channel.unary_unary(
+                '/data.DataService/GetStoredIDs',
+                request_serializer=data__pb2.Empty.SerializeToString,
+                response_deserializer=data__pb2.IDList.FromString,
+                _registered_method=True)
 
 
 class DataServiceServicer(object):
@@ -61,6 +66,12 @@ class DataServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetStoredIDs(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_DataServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -73,6 +84,11 @@ def add_DataServiceServicer_to_server(servicer, server):
                     servicer.GetSharedState,
                     request_deserializer=data__pb2.Empty.FromString,
                     response_serializer=data__pb2.SharedState.SerializeToString,
+            ),
+            'GetStoredIDs': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetStoredIDs,
+                    request_deserializer=data__pb2.Empty.FromString,
+                    response_serializer=data__pb2.IDList.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -129,6 +145,33 @@ class DataService(object):
             '/data.DataService/GetSharedState',
             data__pb2.Empty.SerializeToString,
             data__pb2.SharedState.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetStoredIDs(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/data.DataService/GetStoredIDs',
+            data__pb2.Empty.SerializeToString,
+            data__pb2.IDList.FromString,
             options,
             channel_credentials,
             insecure,
