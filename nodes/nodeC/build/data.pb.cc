@@ -25,6 +25,34 @@ namespace _pb = ::google::protobuf;
 namespace _pbi = ::google::protobuf::internal;
 namespace _fl = ::google::protobuf::internal::field_layout;
 namespace data {
+
+inline constexpr SharedState::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : recent_ids_{},
+        _recent_ids_cached_byte_size_{0},
+        counter_{0},
+        last_target_{0},
+        _cached_size_{0} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR SharedState::SharedState(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct SharedStateDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR SharedStateDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~SharedStateDefaultTypeInternal() {}
+  union {
+    SharedState _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 SharedStateDefaultTypeInternal _SharedState_default_instance_;
               template <typename>
 PROTOBUF_CONSTEXPR Empty::Empty(::_pbi::ConstantInitialized)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
@@ -101,35 +129,51 @@ const ::uint32_t
         ~0u,  // no _inlined_string_donated_
         ~0u,  // no _split_
         ~0u,  // no sizeof(Split)
+        ~0u,  // no _has_bits_
+        PROTOBUF_FIELD_OFFSET(::data::SharedState, _internal_metadata_),
+        ~0u,  // no _extensions_
+        ~0u,  // no _oneof_case_
+        ~0u,  // no _weak_field_map_
+        ~0u,  // no _inlined_string_donated_
+        ~0u,  // no _split_
+        ~0u,  // no sizeof(Split)
+        PROTOBUF_FIELD_OFFSET(::data::SharedState, _impl_.counter_),
+        PROTOBUF_FIELD_OFFSET(::data::SharedState, _impl_.last_target_),
+        PROTOBUF_FIELD_OFFSET(::data::SharedState, _impl_.recent_ids_),
 };
 
 static const ::_pbi::MigrationSchema
     schemas[] ABSL_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
         {0, -1, -1, sizeof(::data::DataMessage)},
         {11, -1, -1, sizeof(::data::Empty)},
+        {19, -1, -1, sizeof(::data::SharedState)},
 };
 static const ::_pb::Message* const file_default_instances[] = {
     &::data::_DataMessage_default_instance_._instance,
     &::data::_Empty_default_instance_._instance,
+    &::data::_SharedState_default_instance_._instance,
 };
 const char descriptor_table_protodef_data_2eproto[] ABSL_ATTRIBUTE_SECTION_VARIABLE(
     protodesc_cold) = {
     "\n\ndata.proto\022\004data\"=\n\013DataMessage\022\n\n\002id\030"
     "\001 \001(\005\022\017\n\007payload\030\002 \001(\014\022\021\n\ttimestamp\030\003 \001("
-    "\t\"\007\n\005Empty29\n\013DataService\022*\n\010PushData\022\021."
-    "data.DataMessage\032\013.data.Emptyb\006proto3"
+    "\t\"\007\n\005Empty\"G\n\013SharedState\022\017\n\007counter\030\001 \001"
+    "(\005\022\023\n\013last_target\030\002 \001(\005\022\022\n\nrecent_ids\030\003 "
+    "\003(\0052k\n\013DataService\022*\n\010PushData\022\021.data.Da"
+    "taMessage\032\013.data.Empty\0220\n\016GetSharedState"
+    "\022\013.data.Empty\032\021.data.SharedStateb\006proto3"
 };
 static ::absl::once_flag descriptor_table_data_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_data_2eproto = {
     false,
     false,
-    157,
+    280,
     descriptor_table_protodef_data_2eproto,
     "data.proto",
     &descriptor_table_data_2eproto_once,
     nullptr,
     0,
-    2,
+    3,
     schemas,
     file_default_instances,
     TableStruct_data_2eproto::offsets,
@@ -522,6 +566,314 @@ const ::_pbi::TcParseTable<0, 0, 0, 0, 2> Empty::_table_ = {
 
 ::google::protobuf::Metadata Empty::GetMetadata() const {
   return ::google::protobuf::internal::ZeroFieldsBase::GetMetadataImpl(GetClassData()->full());
+}
+// ===================================================================
+
+class SharedState::_Internal {
+ public:
+};
+
+SharedState::SharedState(::google::protobuf::Arena* arena)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, _class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:data.SharedState)
+}
+inline PROTOBUF_NDEBUG_INLINE SharedState::Impl_::Impl_(
+    ::google::protobuf::internal::InternalVisibility visibility, ::google::protobuf::Arena* arena,
+    const Impl_& from, const ::data::SharedState& from_msg)
+      : recent_ids_{visibility, arena, from.recent_ids_},
+        _recent_ids_cached_byte_size_{0},
+        _cached_size_{0} {}
+
+SharedState::SharedState(
+    ::google::protobuf::Arena* arena,
+    const SharedState& from)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, _class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  SharedState* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
+  ::memcpy(reinterpret_cast<char *>(&_impl_) +
+               offsetof(Impl_, counter_),
+           reinterpret_cast<const char *>(&from._impl_) +
+               offsetof(Impl_, counter_),
+           offsetof(Impl_, last_target_) -
+               offsetof(Impl_, counter_) +
+               sizeof(Impl_::last_target_));
+
+  // @@protoc_insertion_point(copy_constructor:data.SharedState)
+}
+inline PROTOBUF_NDEBUG_INLINE SharedState::Impl_::Impl_(
+    ::google::protobuf::internal::InternalVisibility visibility,
+    ::google::protobuf::Arena* arena)
+      : recent_ids_{visibility, arena},
+        _recent_ids_cached_byte_size_{0},
+        _cached_size_{0} {}
+
+inline void SharedState::SharedCtor(::_pb::Arena* arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+  ::memset(reinterpret_cast<char *>(&_impl_) +
+               offsetof(Impl_, counter_),
+           0,
+           offsetof(Impl_, last_target_) -
+               offsetof(Impl_, counter_) +
+               sizeof(Impl_::last_target_));
+}
+SharedState::~SharedState() {
+  // @@protoc_insertion_point(destructor:data.SharedState)
+  SharedDtor(*this);
+}
+inline void SharedState::SharedDtor(MessageLite& self) {
+  SharedState& this_ = static_cast<SharedState&>(self);
+  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  ABSL_DCHECK(this_.GetArena() == nullptr);
+  this_._impl_.~Impl_();
+}
+
+inline void* SharedState::PlacementNew_(const void*, void* mem,
+                                        ::google::protobuf::Arena* arena) {
+  return ::new (mem) SharedState(arena);
+}
+constexpr auto SharedState::InternalNewImpl_() {
+  constexpr auto arena_bits = ::google::protobuf::internal::EncodePlacementArenaOffsets({
+      PROTOBUF_FIELD_OFFSET(SharedState, _impl_.recent_ids_) +
+          decltype(SharedState::_impl_.recent_ids_)::
+              InternalGetArenaOffset(
+                  ::google::protobuf::Message::internal_visibility()),
+  });
+  if (arena_bits.has_value()) {
+    return ::google::protobuf::internal::MessageCreator::ZeroInit(
+        sizeof(SharedState), alignof(SharedState), *arena_bits);
+  } else {
+    return ::google::protobuf::internal::MessageCreator(&SharedState::PlacementNew_,
+                                 sizeof(SharedState),
+                                 alignof(SharedState));
+  }
+}
+PROTOBUF_CONSTINIT
+PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::google::protobuf::internal::ClassDataFull SharedState::_class_data_ = {
+    ::google::protobuf::internal::ClassData{
+        &_SharedState_default_instance_._instance,
+        &_table_.header,
+        nullptr,  // OnDemandRegisterArenaDtor
+        nullptr,  // IsInitialized
+        &SharedState::MergeImpl,
+        ::google::protobuf::Message::GetNewImpl<SharedState>(),
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+        &SharedState::SharedDtor,
+        ::google::protobuf::Message::GetClearImpl<SharedState>(), &SharedState::ByteSizeLong,
+            &SharedState::_InternalSerialize,
+#endif  // PROTOBUF_CUSTOM_VTABLE
+        PROTOBUF_FIELD_OFFSET(SharedState, _impl_._cached_size_),
+        false,
+    },
+    &SharedState::kDescriptorMethods,
+    &descriptor_table_data_2eproto,
+    nullptr,  // tracker
+};
+const ::google::protobuf::internal::ClassData* SharedState::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(_class_data_.tc_table);
+  return _class_data_.base();
+}
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<2, 3, 0, 0, 2> SharedState::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    3, 24,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967288,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    3,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    _class_data_.base(),
+    nullptr,  // post_loop_handler
+    ::_pbi::TcParser::GenericFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::data::SharedState>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // int32 counter = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(SharedState, _impl_.counter_), 63>(),
+     {8, 63, 0, PROTOBUF_FIELD_OFFSET(SharedState, _impl_.counter_)}},
+    // int32 last_target = 2;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(SharedState, _impl_.last_target_), 63>(),
+     {16, 63, 0, PROTOBUF_FIELD_OFFSET(SharedState, _impl_.last_target_)}},
+    // repeated int32 recent_ids = 3;
+    {::_pbi::TcParser::FastV32P1,
+     {26, 63, 0, PROTOBUF_FIELD_OFFSET(SharedState, _impl_.recent_ids_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // int32 counter = 1;
+    {PROTOBUF_FIELD_OFFSET(SharedState, _impl_.counter_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
+    // int32 last_target = 2;
+    {PROTOBUF_FIELD_OFFSET(SharedState, _impl_.last_target_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
+    // repeated int32 recent_ids = 3;
+    {PROTOBUF_FIELD_OFFSET(SharedState, _impl_.recent_ids_), 0, 0,
+    (0 | ::_fl::kFcRepeated | ::_fl::kPackedInt32)},
+  }},
+  // no aux_entries
+  {{
+  }},
+};
+
+PROTOBUF_NOINLINE void SharedState::Clear() {
+// @@protoc_insertion_point(message_clear_start:data.SharedState)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.recent_ids_.Clear();
+  ::memset(&_impl_.counter_, 0, static_cast<::size_t>(
+      reinterpret_cast<char*>(&_impl_.last_target_) -
+      reinterpret_cast<char*>(&_impl_.counter_)) + sizeof(_impl_.last_target_));
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+        ::uint8_t* SharedState::_InternalSerialize(
+            const MessageLite& base, ::uint8_t* target,
+            ::google::protobuf::io::EpsCopyOutputStream* stream) {
+          const SharedState& this_ = static_cast<const SharedState&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+        ::uint8_t* SharedState::_InternalSerialize(
+            ::uint8_t* target,
+            ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+          const SharedState& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+          // @@protoc_insertion_point(serialize_to_array_start:data.SharedState)
+          ::uint32_t cached_has_bits = 0;
+          (void)cached_has_bits;
+
+          // int32 counter = 1;
+          if (this_._internal_counter() != 0) {
+            target = ::google::protobuf::internal::WireFormatLite::
+                WriteInt32ToArrayWithField<1>(
+                    stream, this_._internal_counter(), target);
+          }
+
+          // int32 last_target = 2;
+          if (this_._internal_last_target() != 0) {
+            target = ::google::protobuf::internal::WireFormatLite::
+                WriteInt32ToArrayWithField<2>(
+                    stream, this_._internal_last_target(), target);
+          }
+
+          // repeated int32 recent_ids = 3;
+          {
+            int byte_size = this_._impl_._recent_ids_cached_byte_size_.Get();
+            if (byte_size > 0) {
+              target = stream->WriteInt32Packed(
+                  3, this_._internal_recent_ids(), byte_size, target);
+            }
+          }
+
+          if (PROTOBUF_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
+            target =
+                ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+                    this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+          }
+          // @@protoc_insertion_point(serialize_to_array_end:data.SharedState)
+          return target;
+        }
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+        ::size_t SharedState::ByteSizeLong(const MessageLite& base) {
+          const SharedState& this_ = static_cast<const SharedState&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+        ::size_t SharedState::ByteSizeLong() const {
+          const SharedState& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+          // @@protoc_insertion_point(message_byte_size_start:data.SharedState)
+          ::size_t total_size = 0;
+
+          ::uint32_t cached_has_bits = 0;
+          // Prevent compiler warnings about cached_has_bits being unused
+          (void)cached_has_bits;
+
+          ::_pbi::Prefetch5LinesFrom7Lines(&this_);
+           {
+            // repeated int32 recent_ids = 3;
+            {
+              total_size +=
+                  ::_pbi::WireFormatLite::Int32SizeWithPackedTagSize(
+                      this_._internal_recent_ids(), 1,
+                      this_._impl_._recent_ids_cached_byte_size_);
+            }
+          }
+           {
+            // int32 counter = 1;
+            if (this_._internal_counter() != 0) {
+              total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
+                  this_._internal_counter());
+            }
+            // int32 last_target = 2;
+            if (this_._internal_last_target() != 0) {
+              total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
+                  this_._internal_last_target());
+            }
+          }
+          return this_.MaybeComputeUnknownFieldsSize(total_size,
+                                                     &this_._impl_._cached_size_);
+        }
+
+void SharedState::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
+  auto* const _this = static_cast<SharedState*>(&to_msg);
+  auto& from = static_cast<const SharedState&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:data.SharedState)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  _this->_internal_mutable_recent_ids()->MergeFrom(from._internal_recent_ids());
+  if (from._internal_counter() != 0) {
+    _this->_impl_.counter_ = from._impl_.counter_;
+  }
+  if (from._internal_last_target() != 0) {
+    _this->_impl_.last_target_ = from._impl_.last_target_;
+  }
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void SharedState::CopyFrom(const SharedState& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:data.SharedState)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+
+void SharedState::InternalSwap(SharedState* PROTOBUF_RESTRICT other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  _impl_.recent_ids_.InternalSwap(&other->_impl_.recent_ids_);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(SharedState, _impl_.last_target_)
+      + sizeof(SharedState::_impl_.last_target_)
+      - PROTOBUF_FIELD_OFFSET(SharedState, _impl_.counter_)>(
+          reinterpret_cast<char*>(&_impl_.counter_),
+          reinterpret_cast<char*>(&other->_impl_.counter_));
+}
+
+::google::protobuf::Metadata SharedState::GetMetadata() const {
+  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
 }
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace data

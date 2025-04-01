@@ -13,6 +13,7 @@
 #include <errno.h>
 #include <pwd.h>
 #include <unistd.h>
+#include <map>
 
 using grpc::Server;
 using grpc::ServerBuilder;
@@ -31,7 +32,7 @@ using namespace boost::interprocess;
 struct SharedData {
     int counter;
     int last_target;  // 0 for C, 1 for D
-    std::vector<int> message_history;  // Track last 10 messages
+    std::vector<int> recent_ids;  // Changed from message_history to recent_ids
 };
 
 // Client class for forwarding data
@@ -55,10 +56,22 @@ class DataServiceClient {
 
 class DataServiceImpl final : public DataService::Service {
  public:
-  DataServiceImpl(const json& config) : config_(config) {
+  DataServiceImpl(const nlohmann::json& config) : shared_data_(nullptr) {
+    // Initialize edges from config
+    for (const auto& edge : config["edges"]) {
+      std::string id = edge["id"].get<std::string>();
+      std::string address = edge["ip"].get<std::string>() + ":" + std::to_string(edge["port"].get<int>());
+      edges_[id] = address;
+    }
+
     // Initialize shared memory
-    if (!initializeSharedMemory()) {
-      throw std::runtime_error("Failed to initialize shared memory");
+    try {
+      if (!initializeSharedMemory()) {
+        throw std::runtime_error("Failed to initialize shared memory");
+      }
+    } catch (const std::exception& e) {
+      std::cerr << "Error initializing shared memory: " << e.what() << std::endl;
+      throw;
     }
   }
 
@@ -76,56 +89,63 @@ class DataServiceImpl final : public DataService::Service {
     }
   }
 
-  Status PushData(ServerContext* context, const DataMessage* request, Empty* reply) override {
-    std::cout << "NodeB: Received data ID " << request->id() << "\n";
-
-    // Get shared data with mutex lock
-    SharedData* data = static_cast<SharedData*>(region_->get_address());
-    if (!data) {
-      return Status(grpc::INTERNAL, "Failed to access shared memory");
+  Status PushData(ServerContext* context, const data::DataMessage* request, data::Empty* response) override {
+    try {
+      // Get shared data with mutex lock
+      std::lock_guard<boost::interprocess::named_mutex> lock(*mutex_);
+      
+      // Determine target node based on data ID
+      int target = request->id() % 2;  // 0 for C, 1 for D
+      std::string target_address = target == 0 ? edges_["C"] : edges_["D"];
+      
+      // Create channel and stub for target node
+      auto channel = grpc::CreateChannel(target_address, grpc::InsecureChannelCredentials());
+      auto stub = data::DataService::NewStub(channel);
+      
+      // Forward data to target node
+      std::unique_ptr<grpc::ClientContext> client_context = std::make_unique<grpc::ClientContext>();
+      data::Empty forward_response;
+      Status status = stub->PushData(client_context.get(), *request, &forward_response);
+      
+      if (!status.ok()) {
+        std::cerr << "Failed to forward data to " << (target == 0 ? "C" : "D") << ": " << status.error_message() << std::endl;
+        return status;
+      }
+      
+      // Update shared memory state
+      shared_data_->counter++;
+      shared_data_->last_target = target;
+      shared_data_->recent_ids.push_back(request->id());
+      
+      // Keep only the last 10 messages
+      if (shared_data_->recent_ids.size() > 10) {
+        shared_data_->recent_ids.erase(shared_data_->recent_ids.begin());
+      }
+      
+      // Log the state
+      std::cout << "NodeB: Shared memory state - counter: " << shared_data_->counter 
+                << ", last_target: " << (target == 0 ? "C" : "D")
+                << ", recent IDs: [";
+      for (size_t i = 0; i < shared_data_->recent_ids.size(); ++i) {
+        std::cout << shared_data_->recent_ids[i];
+        if (i < shared_data_->recent_ids.size() - 1) std::cout << ", ";
+      }
+      std::cout << "]" << std::endl;
+      
+      return Status::OK;
+    } catch (const std::exception& e) {
+      std::cerr << "Error in PushData: " << e.what() << std::endl;
+      return Status(grpc::INTERNAL, "Internal server error");
     }
+  }
 
-    // Lock mutex for thread safety
-    scoped_lock<named_mutex> lock(*mutex_);
-
-    // Update shared data
-    data->counter++;
-    data->last_target = request->id() % 2;  // 0 for C, 1 for D
-    
-    // Update message history
-    if (data->message_history.size() >= 10) {
-      data->message_history.erase(data->message_history.begin());
+  Status GetSharedState(ServerContext* context, const data::Empty* request, data::SharedState* response) override {
+    std::lock_guard<boost::interprocess::named_mutex> lock(*mutex_);
+    response->set_counter(shared_data_->counter);
+    response->set_last_target(shared_data_->last_target);
+    for (const auto& id : shared_data_->recent_ids) {
+        response->add_recent_ids(id);
     }
-    data->message_history.push_back(request->id());
-
-    // Print shared memory state
-    std::cout << "NodeB: Shared memory state - counter: " << data->counter 
-              << ", last_target: " << (data->last_target == 0 ? "C" : "D")
-              << ", message history: [";
-    for (size_t i = 0; i < data->message_history.size(); ++i) {
-      std::cout << data->message_history[i];
-      if (i < data->message_history.size() - 1) std::cout << ", ";
-    }
-    std::cout << "]" << std::endl;
-    
-    // Determine target using hash function
-    int target = request->id() % 2;  // 0 for C, 1 for D
-    
-    // Get target address from config
-    const auto& edges = config_["edges"];
-    const auto& target_edge = edges[target];
-    std::string addr = target_edge["ip"].get<std::string>() + ":" + 
-                      std::to_string(target_edge["port"].get<int>());
-    std::string target_name = target_edge["id"].get<std::string>();
-
-    std::cout << "NodeB: Forwarding data ID " << request->id() 
-              << " to " << target_name << " at " << addr << std::endl;
-
-    // Forward data
-    auto channel = CreateChannel(addr, grpc::InsecureChannelCredentials());
-    DataServiceClient client(channel);
-    client.PushData(*request);
-
     return Status::OK;
   }
 
@@ -133,8 +153,9 @@ class DataServiceImpl final : public DataService::Service {
   json config_;
   std::unique_ptr<shared_memory_object> segment_;
   std::unique_ptr<mapped_region> region_;
-  SharedData* shared_data_;
   std::unique_ptr<named_mutex> mutex_;
+  SharedData* shared_data_;
+  std::map<std::string, std::string> edges_;
 
   bool initializeSharedMemory() {
     try {

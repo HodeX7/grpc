@@ -59,6 +59,9 @@ extern DataMessageDefaultTypeInternal _DataMessage_default_instance_;
 class Empty;
 struct EmptyDefaultTypeInternal;
 extern EmptyDefaultTypeInternal _Empty_default_instance_;
+class SharedState;
+struct SharedStateDefaultTypeInternal;
+extern SharedStateDefaultTypeInternal _SharedState_default_instance_;
 }  // namespace data
 namespace google {
 namespace protobuf {
@@ -70,6 +73,229 @@ namespace data {
 // ===================================================================
 
 
+// -------------------------------------------------------------------
+
+class SharedState final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:data.SharedState) */ {
+ public:
+  inline SharedState() : SharedState(nullptr) {}
+  ~SharedState() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(SharedState* msg, std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(SharedState));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR SharedState(
+      ::google::protobuf::internal::ConstantInitialized);
+
+  inline SharedState(const SharedState& from) : SharedState(nullptr, from) {}
+  inline SharedState(SharedState&& from) noexcept
+      : SharedState(nullptr, std::move(from)) {}
+  inline SharedState& operator=(const SharedState& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SharedState& operator=(SharedState&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SharedState& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SharedState* internal_default_instance() {
+    return reinterpret_cast<const SharedState*>(
+        &_SharedState_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 2;
+  friend void swap(SharedState& a, SharedState& b) { a.Swap(&b); }
+  inline void Swap(SharedState* other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SharedState* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  SharedState* New(::google::protobuf::Arena* arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<SharedState>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const SharedState& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const SharedState& from) { SharedState::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(
+      ::google::protobuf::MessageLite& to_msg,
+      const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* _InternalSerialize(
+      const MessageLite& msg, ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(SharedState* other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(
+      ::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "data.SharedState"; }
+
+ protected:
+  explicit SharedState(::google::protobuf::Arena* arena);
+  SharedState(::google::protobuf::Arena* arena, const SharedState& from);
+  SharedState(::google::protobuf::Arena* arena, SharedState&& from) noexcept
+      : SharedState(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* GetClassData() const PROTOBUF_FINAL;
+  static void* PlacementNew_(const void*, void* mem,
+                             ::google::protobuf::Arena* arena);
+  static constexpr auto InternalNewImpl_();
+  static const ::google::protobuf::internal::ClassDataFull _class_data_;
+
+ public:
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kRecentIdsFieldNumber = 3,
+    kCounterFieldNumber = 1,
+    kLastTargetFieldNumber = 2,
+  };
+  // repeated int32 recent_ids = 3;
+  int recent_ids_size() const;
+  private:
+  int _internal_recent_ids_size() const;
+
+  public:
+  void clear_recent_ids() ;
+  ::int32_t recent_ids(int index) const;
+  void set_recent_ids(int index, ::int32_t value);
+  void add_recent_ids(::int32_t value);
+  const ::google::protobuf::RepeatedField<::int32_t>& recent_ids() const;
+  ::google::protobuf::RepeatedField<::int32_t>* mutable_recent_ids();
+
+  private:
+  const ::google::protobuf::RepeatedField<::int32_t>& _internal_recent_ids() const;
+  ::google::protobuf::RepeatedField<::int32_t>* _internal_mutable_recent_ids();
+
+  public:
+  // int32 counter = 1;
+  void clear_counter() ;
+  ::int32_t counter() const;
+  void set_counter(::int32_t value);
+
+  private:
+  ::int32_t _internal_counter() const;
+  void _internal_set_counter(::int32_t value);
+
+  public:
+  // int32 last_target = 2;
+  void clear_last_target() ;
+  ::int32_t last_target() const;
+  void set_last_target(::int32_t value);
+
+  private:
+  ::int32_t _internal_last_target() const;
+  void _internal_set_last_target(::int32_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:data.SharedState)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<
+      2, 3, 0,
+      0, 2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(
+        ::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena);
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena, const Impl_& from,
+                          const SharedState& from_msg);
+    ::google::protobuf::RepeatedField<::int32_t> recent_ids_;
+    ::google::protobuf::internal::CachedSize _recent_ids_cached_byte_size_;
+    ::int32_t counter_;
+    ::int32_t last_target_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_data_2eproto;
+};
 // -------------------------------------------------------------------
 
 class Empty final : public ::google::protobuf::internal::ZeroFieldsBase
@@ -579,6 +805,99 @@ inline void DataMessage::set_allocated_timestamp(std::string* value) {
 // -------------------------------------------------------------------
 
 // Empty
+
+// -------------------------------------------------------------------
+
+// SharedState
+
+// int32 counter = 1;
+inline void SharedState::clear_counter() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.counter_ = 0;
+}
+inline ::int32_t SharedState::counter() const {
+  // @@protoc_insertion_point(field_get:data.SharedState.counter)
+  return _internal_counter();
+}
+inline void SharedState::set_counter(::int32_t value) {
+  _internal_set_counter(value);
+  // @@protoc_insertion_point(field_set:data.SharedState.counter)
+}
+inline ::int32_t SharedState::_internal_counter() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.counter_;
+}
+inline void SharedState::_internal_set_counter(::int32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.counter_ = value;
+}
+
+// int32 last_target = 2;
+inline void SharedState::clear_last_target() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.last_target_ = 0;
+}
+inline ::int32_t SharedState::last_target() const {
+  // @@protoc_insertion_point(field_get:data.SharedState.last_target)
+  return _internal_last_target();
+}
+inline void SharedState::set_last_target(::int32_t value) {
+  _internal_set_last_target(value);
+  // @@protoc_insertion_point(field_set:data.SharedState.last_target)
+}
+inline ::int32_t SharedState::_internal_last_target() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.last_target_;
+}
+inline void SharedState::_internal_set_last_target(::int32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.last_target_ = value;
+}
+
+// repeated int32 recent_ids = 3;
+inline int SharedState::_internal_recent_ids_size() const {
+  return _internal_recent_ids().size();
+}
+inline int SharedState::recent_ids_size() const {
+  return _internal_recent_ids_size();
+}
+inline void SharedState::clear_recent_ids() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.recent_ids_.Clear();
+}
+inline ::int32_t SharedState::recent_ids(int index) const {
+  // @@protoc_insertion_point(field_get:data.SharedState.recent_ids)
+  return _internal_recent_ids().Get(index);
+}
+inline void SharedState::set_recent_ids(int index, ::int32_t value) {
+  _internal_mutable_recent_ids()->Set(index, value);
+  // @@protoc_insertion_point(field_set:data.SharedState.recent_ids)
+}
+inline void SharedState::add_recent_ids(::int32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _internal_mutable_recent_ids()->Add(value);
+  // @@protoc_insertion_point(field_add:data.SharedState.recent_ids)
+}
+inline const ::google::protobuf::RepeatedField<::int32_t>& SharedState::recent_ids() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_list:data.SharedState.recent_ids)
+  return _internal_recent_ids();
+}
+inline ::google::protobuf::RepeatedField<::int32_t>* SharedState::mutable_recent_ids()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable_list:data.SharedState.recent_ids)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _internal_mutable_recent_ids();
+}
+inline const ::google::protobuf::RepeatedField<::int32_t>&
+SharedState::_internal_recent_ids() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.recent_ids_;
+}
+inline ::google::protobuf::RepeatedField<::int32_t>* SharedState::_internal_mutable_recent_ids() {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return &_impl_.recent_ids_;
+}
 
 #ifdef __GNUC__
 #pragma GCC diagnostic pop

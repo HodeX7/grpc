@@ -39,12 +39,23 @@ class DataServiceStub(object):
                 request_serializer=data__pb2.DataMessage.SerializeToString,
                 response_deserializer=data__pb2.Empty.FromString,
                 _registered_method=True)
+        self.GetSharedState = channel.unary_unary(
+                '/data.DataService/GetSharedState',
+                request_serializer=data__pb2.Empty.SerializeToString,
+                response_deserializer=data__pb2.SharedState.FromString,
+                _registered_method=True)
 
 
 class DataServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def PushData(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetSharedState(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -57,6 +68,11 @@ def add_DataServiceServicer_to_server(servicer, server):
                     servicer.PushData,
                     request_deserializer=data__pb2.DataMessage.FromString,
                     response_serializer=data__pb2.Empty.SerializeToString,
+            ),
+            'GetSharedState': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetSharedState,
+                    request_deserializer=data__pb2.Empty.FromString,
+                    response_serializer=data__pb2.SharedState.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -86,6 +102,33 @@ class DataService(object):
             '/data.DataService/PushData',
             data__pb2.DataMessage.SerializeToString,
             data__pb2.Empty.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetSharedState(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/data.DataService/GetSharedState',
+            data__pb2.Empty.SerializeToString,
+            data__pb2.SharedState.FromString,
             options,
             channel_credentials,
             insecure,
