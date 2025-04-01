@@ -293,3 +293,104 @@ def generate_data(id):
 2. Add monitoring and metrics collection
 3. Implement data persistence
 4. Add load balancing capabilities
+
+## Step 4: Shared Memory Implementation in Node B
+
+### Overview
+
+Node B implements shared memory using Boost.Interprocess library to maintain state and coordinate message forwarding between Nodes C and D. This implementation is specific to Node B because:
+
+1. Nodes C and D are intended to run on different physical machines
+2. Shared memory is most effective for inter-process communication on the same machine
+3. Node B acts as the central coordinator in the overlay network
+
+### Implementation Details
+
+- Location: `/dev/shm/aksharmehta_counter` (user-specific shared memory segment)
+- Components:
+  - Shared Data Structure:
+    ```cpp
+    struct SharedData {
+        int counter;                    // Total messages processed
+        int last_target;               // Last node forwarded to (C or D)
+        std::vector<int> message_history;  // Last 10 messages processed
+    };
+    ```
+  - Named Mutex: Ensures thread-safe access to shared data
+  - Memory Mapping: Maps shared memory segment for process access
+
+### Purpose and Benefits
+
+1. **State Persistence**
+
+   - Maintains message count across multiple requests
+   - Tracks forwarding history for load balancing
+   - Enables round-robin distribution between Nodes C and D
+
+2. **Load Balancing**
+
+   - Ensures even distribution of messages between Nodes C and D
+   - Prevents overloading of a single downstream node
+   - Maintains fairness in the overlay network
+
+3. **Performance Optimization**
+   - Reduces memory allocation overhead
+   - Minimizes synchronization overhead
+   - Provides fast access to shared state
+
+### Effects on Overlay Network
+
+1. **Reliability**
+
+   - Node B maintains consistent state even if individual requests fail
+   - Prevents message loss during network issues
+   - Enables recovery from temporary failures
+
+2. **Scalability**
+
+   - Efficient handling of high message volumes
+   - Reduced memory usage through shared resources
+   - Better resource utilization
+
+3. **Monitoring and Debugging**
+   - Real-time visibility into message flow
+   - Easy tracking of system state
+   - Simplified troubleshooting
+
+### Technical Considerations
+
+1. **Security**
+
+   - User-specific shared memory segments
+   - Proper permission handling
+   - Isolation between different users
+
+2. **Resource Management**
+
+   - Automatic cleanup of shared memory
+   - Proper mutex locking/unlocking
+   - Memory leak prevention
+
+3. **Error Handling**
+   - Graceful degradation if shared memory fails
+   - Fallback to regular memory if needed
+   - Comprehensive error logging
+
+### Future Improvements
+
+1. **Monitoring**
+
+   - Add metrics collection
+   - Implement health checks
+   - Enhanced logging capabilities
+
+2. **Performance**
+
+   - Optimize memory usage
+   - Fine-tune synchronization
+   - Implement caching strategies
+
+3. **Reliability**
+   - Add backup mechanisms
+   - Implement recovery procedures
+   - Enhanced error handling

@@ -14,6 +14,9 @@
 # EXTERNAL cache entries
 ########################
 
+//The directory containing a CMake configuration file for Boost.
+Boost_DIR:PATH=/opt/homebrew/lib/cmake/Boost-1.87.0
+
 //Path to a program.
 CMAKE_ADDR2LINE:FILEPATH=CMAKE_ADDR2LINE-NOTFOUND
 
@@ -241,10 +244,16 @@ ZLIB_LIBRARY_DEBUG:FILEPATH=ZLIB_LIBRARY_DEBUG-NOTFOUND
 ZLIB_LIBRARY_RELEASE:FILEPATH=/Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk/usr/lib/libz.tbd
 
 //The directory containing a CMake configuration file for absl.
-absl_DIR:PATH=/Users/aksharmehta/miniconda3/lib/cmake/absl
+absl_DIR:PATH=/opt/homebrew/lib/cmake/absl
+
+//The directory containing a CMake configuration file for boost_headers.
+boost_headers_DIR:PATH=/opt/homebrew/lib/cmake/boost_headers-1.87.0
+
+//The directory containing a CMake configuration file for boost_system.
+boost_system_DIR:PATH=/opt/homebrew/lib/cmake/boost_system-1.87.0
 
 //The directory containing a CMake configuration file for c-ares.
-c-ares_DIR:PATH=/Users/aksharmehta/miniconda3/lib/cmake/c-ares
+c-ares_DIR:PATH=/opt/homebrew/lib/cmake/c-ares
 
 //The directory containing a CMake configuration file for gRPC.
 gRPC_DIR:PATH=/Users/aksharmehta/miniconda3/lib/cmake/grpc
@@ -274,10 +283,10 @@ protobuf_MODULE_COMPATIBLE:BOOL=OFF
 protobuf_VERBOSE:BOOL=OFF
 
 //The directory containing a CMake configuration file for re2.
-re2_DIR:PATH=/Users/aksharmehta/miniconda3/lib/cmake/re2
+re2_DIR:PATH=/opt/homebrew/lib/cmake/re2
 
 //The directory containing a CMake configuration file for utf8_range.
-utf8_range_DIR:PATH=/Users/aksharmehta/miniconda3/lib/cmake/utf8_range
+utf8_range_DIR:PATH=/opt/homebrew/lib/cmake/utf8_range
 
 
 ########################
@@ -432,7 +441,7 @@ FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
 //Details about finding ZLIB
 FIND_PACKAGE_MESSAGE_DETAILS_ZLIB:INTERNAL=[/Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk/usr/lib/libz.tbd][/Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk/usr/include][c ][v1.2.12()]
 //Details about finding c-ares
-FIND_PACKAGE_MESSAGE_DETAILS_c-ares:INTERNAL=[/Users/aksharmehta/miniconda3/lib/cmake/c-ares/c-ares-config.cmake][v1.19.1()]
+FIND_PACKAGE_MESSAGE_DETAILS_c-ares:INTERNAL=[/opt/homebrew/lib/cmake/c-ares/c-ares-config.cmake][v1.34.4()]
 //Details about finding nlohmann_json
 FIND_PACKAGE_MESSAGE_DETAILS_nlohmann_json:INTERNAL=[/opt/homebrew/share/cmake/nlohmann_json/nlohmann_jsonConfig.cmake][v3.11.3()]
 //ADVANCED property for variable: OPENSSL_CRYPTO_LIBRARY
@@ -488,6 +497,10 @@ _OPENSSL_openssl_PREFIX:INTERNAL=
 _OPENSSL_openssl_VERSION:INTERNAL=
 __pkg_config_arguments__OPENSSL:INTERNAL=QUIET;openssl
 __pkg_config_checked__OPENSSL:INTERNAL=1
+//ADVANCED property for variable: boost_headers_DIR
+boost_headers_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: boost_system_DIR
+boost_system_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: pkgcfg_lib__OPENSSL_crypto
 pkgcfg_lib__OPENSSL_crypto-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: pkgcfg_lib__OPENSSL_ssl

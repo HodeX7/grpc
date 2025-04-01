@@ -3,7 +3,8 @@ syntax = "proto3";
 package data;
 
 service DataService {
-  rpc PushData (DataMessage) returns (Empty); 
+  rpc PushData (DataMessage) returns (Empty);
+  rpc GetSharedState (Empty) returns (SharedState);
 }
 
 message DataMessage {
@@ -13,3 +14,9 @@ message DataMessage {
 }
 
 message Empty {}          
+
+message SharedState {
+  int32 counter = 1;     
+  int32 last_target = 2; 
+  repeated int32 recent_ids = 3; 
+}          
