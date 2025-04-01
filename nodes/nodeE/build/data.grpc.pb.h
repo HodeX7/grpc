@@ -50,6 +50,13 @@ class DataService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::data::SharedState>> PrepareAsyncGetSharedState(::grpc::ClientContext* context, const ::data::Empty& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::data::SharedState>>(PrepareAsyncGetSharedStateRaw(context, request, cq));
     }
+    virtual ::grpc::Status GetStoredIDs(::grpc::ClientContext* context, const ::data::Empty& request, ::data::IDList* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::data::IDList>> AsyncGetStoredIDs(::grpc::ClientContext* context, const ::data::Empty& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::data::IDList>>(AsyncGetStoredIDsRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::data::IDList>> PrepareAsyncGetStoredIDs(::grpc::ClientContext* context, const ::data::Empty& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::data::IDList>>(PrepareAsyncGetStoredIDsRaw(context, request, cq));
+    }
     class async_interface {
      public:
       virtual ~async_interface() {}
@@ -57,6 +64,8 @@ class DataService final {
       virtual void PushData(::grpc::ClientContext* context, const ::data::DataMessage* request, ::data::Empty* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void GetSharedState(::grpc::ClientContext* context, const ::data::Empty* request, ::data::SharedState* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetSharedState(::grpc::ClientContext* context, const ::data::Empty* request, ::data::SharedState* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void GetStoredIDs(::grpc::ClientContext* context, const ::data::Empty* request, ::data::IDList* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void GetStoredIDs(::grpc::ClientContext* context, const ::data::Empty* request, ::data::IDList* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
@@ -66,6 +75,8 @@ class DataService final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::data::Empty>* PrepareAsyncPushDataRaw(::grpc::ClientContext* context, const ::data::DataMessage& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::data::SharedState>* AsyncGetSharedStateRaw(::grpc::ClientContext* context, const ::data::Empty& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::data::SharedState>* PrepareAsyncGetSharedStateRaw(::grpc::ClientContext* context, const ::data::Empty& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::data::IDList>* AsyncGetStoredIDsRaw(::grpc::ClientContext* context, const ::data::Empty& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::data::IDList>* PrepareAsyncGetStoredIDsRaw(::grpc::ClientContext* context, const ::data::Empty& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -84,6 +95,13 @@ class DataService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::data::SharedState>> PrepareAsyncGetSharedState(::grpc::ClientContext* context, const ::data::Empty& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::data::SharedState>>(PrepareAsyncGetSharedStateRaw(context, request, cq));
     }
+    ::grpc::Status GetStoredIDs(::grpc::ClientContext* context, const ::data::Empty& request, ::data::IDList* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::data::IDList>> AsyncGetStoredIDs(::grpc::ClientContext* context, const ::data::Empty& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::data::IDList>>(AsyncGetStoredIDsRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::data::IDList>> PrepareAsyncGetStoredIDs(::grpc::ClientContext* context, const ::data::Empty& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::data::IDList>>(PrepareAsyncGetStoredIDsRaw(context, request, cq));
+    }
     class async final :
       public StubInterface::async_interface {
      public:
@@ -91,6 +109,8 @@ class DataService final {
       void PushData(::grpc::ClientContext* context, const ::data::DataMessage* request, ::data::Empty* response, ::grpc::ClientUnaryReactor* reactor) override;
       void GetSharedState(::grpc::ClientContext* context, const ::data::Empty* request, ::data::SharedState* response, std::function<void(::grpc::Status)>) override;
       void GetSharedState(::grpc::ClientContext* context, const ::data::Empty* request, ::data::SharedState* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void GetStoredIDs(::grpc::ClientContext* context, const ::data::Empty* request, ::data::IDList* response, std::function<void(::grpc::Status)>) override;
+      void GetStoredIDs(::grpc::ClientContext* context, const ::data::Empty* request, ::data::IDList* response, ::grpc::ClientUnaryReactor* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -106,8 +126,11 @@ class DataService final {
     ::grpc::ClientAsyncResponseReader< ::data::Empty>* PrepareAsyncPushDataRaw(::grpc::ClientContext* context, const ::data::DataMessage& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::data::SharedState>* AsyncGetSharedStateRaw(::grpc::ClientContext* context, const ::data::Empty& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::data::SharedState>* PrepareAsyncGetSharedStateRaw(::grpc::ClientContext* context, const ::data::Empty& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::data::IDList>* AsyncGetStoredIDsRaw(::grpc::ClientContext* context, const ::data::Empty& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::data::IDList>* PrepareAsyncGetStoredIDsRaw(::grpc::ClientContext* context, const ::data::Empty& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_PushData_;
     const ::grpc::internal::RpcMethod rpcmethod_GetSharedState_;
+    const ::grpc::internal::RpcMethod rpcmethod_GetStoredIDs_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -117,6 +140,7 @@ class DataService final {
     virtual ~Service();
     virtual ::grpc::Status PushData(::grpc::ServerContext* context, const ::data::DataMessage* request, ::data::Empty* response);
     virtual ::grpc::Status GetSharedState(::grpc::ServerContext* context, const ::data::Empty* request, ::data::SharedState* response);
+    virtual ::grpc::Status GetStoredIDs(::grpc::ServerContext* context, const ::data::Empty* request, ::data::IDList* response);
   };
   template <class BaseClass>
   class WithAsyncMethod_PushData : public BaseClass {
@@ -158,7 +182,27 @@ class DataService final {
       ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_PushData<WithAsyncMethod_GetSharedState<Service > > AsyncService;
+  template <class BaseClass>
+  class WithAsyncMethod_GetStoredIDs : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_GetStoredIDs() {
+      ::grpc::Service::MarkMethodAsync(2);
+    }
+    ~WithAsyncMethod_GetStoredIDs() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetStoredIDs(::grpc::ServerContext* /*context*/, const ::data::Empty* /*request*/, ::data::IDList* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetStoredIDs(::grpc::ServerContext* context, ::data::Empty* request, ::grpc::ServerAsyncResponseWriter< ::data::IDList>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_PushData<WithAsyncMethod_GetSharedState<WithAsyncMethod_GetStoredIDs<Service > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_PushData : public BaseClass {
    private:
@@ -213,7 +257,34 @@ class DataService final {
     virtual ::grpc::ServerUnaryReactor* GetSharedState(
       ::grpc::CallbackServerContext* /*context*/, const ::data::Empty* /*request*/, ::data::SharedState* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_PushData<WithCallbackMethod_GetSharedState<Service > > CallbackService;
+  template <class BaseClass>
+  class WithCallbackMethod_GetStoredIDs : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_GetStoredIDs() {
+      ::grpc::Service::MarkMethodCallback(2,
+          new ::grpc::internal::CallbackUnaryHandler< ::data::Empty, ::data::IDList>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::data::Empty* request, ::data::IDList* response) { return this->GetStoredIDs(context, request, response); }));}
+    void SetMessageAllocatorFor_GetStoredIDs(
+        ::grpc::MessageAllocator< ::data::Empty, ::data::IDList>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(2);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::data::Empty, ::data::IDList>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_GetStoredIDs() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetStoredIDs(::grpc::ServerContext* /*context*/, const ::data::Empty* /*request*/, ::data::IDList* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetStoredIDs(
+      ::grpc::CallbackServerContext* /*context*/, const ::data::Empty* /*request*/, ::data::IDList* /*response*/)  { return nullptr; }
+  };
+  typedef WithCallbackMethod_PushData<WithCallbackMethod_GetSharedState<WithCallbackMethod_GetStoredIDs<Service > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_PushData : public BaseClass {
@@ -245,6 +316,23 @@ class DataService final {
     }
     // disable synchronous version of this method
     ::grpc::Status GetSharedState(::grpc::ServerContext* /*context*/, const ::data::Empty* /*request*/, ::data::SharedState* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_GetStoredIDs : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_GetStoredIDs() {
+      ::grpc::Service::MarkMethodGeneric(2);
+    }
+    ~WithGenericMethod_GetStoredIDs() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetStoredIDs(::grpc::ServerContext* /*context*/, const ::data::Empty* /*request*/, ::data::IDList* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -290,6 +378,26 @@ class DataService final {
     }
   };
   template <class BaseClass>
+  class WithRawMethod_GetStoredIDs : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_GetStoredIDs() {
+      ::grpc::Service::MarkMethodRaw(2);
+    }
+    ~WithRawMethod_GetStoredIDs() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetStoredIDs(::grpc::ServerContext* /*context*/, const ::data::Empty* /*request*/, ::data::IDList* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetStoredIDs(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithRawCallbackMethod_PushData : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
@@ -331,6 +439,28 @@ class DataService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* GetSharedState(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_GetStoredIDs : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_GetStoredIDs() {
+      ::grpc::Service::MarkMethodRawCallback(2,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GetStoredIDs(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_GetStoredIDs() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetStoredIDs(::grpc::ServerContext* /*context*/, const ::data::Empty* /*request*/, ::data::IDList* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetStoredIDs(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
@@ -387,9 +517,36 @@ class DataService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedGetSharedState(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::data::Empty,::data::SharedState>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_PushData<WithStreamedUnaryMethod_GetSharedState<Service > > StreamedUnaryService;
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_GetStoredIDs : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_GetStoredIDs() {
+      ::grpc::Service::MarkMethodStreamed(2,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::data::Empty, ::data::IDList>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::data::Empty, ::data::IDList>* streamer) {
+                       return this->StreamedGetStoredIDs(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_GetStoredIDs() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status GetStoredIDs(::grpc::ServerContext* /*context*/, const ::data::Empty* /*request*/, ::data::IDList* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedGetStoredIDs(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::data::Empty,::data::IDList>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_PushData<WithStreamedUnaryMethod_GetSharedState<WithStreamedUnaryMethod_GetStoredIDs<Service > > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_PushData<WithStreamedUnaryMethod_GetSharedState<Service > > StreamedService;
+  typedef WithStreamedUnaryMethod_PushData<WithStreamedUnaryMethod_GetSharedState<WithStreamedUnaryMethod_GetStoredIDs<Service > > > StreamedService;
 };
 
 }  // namespace data

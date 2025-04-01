@@ -24,6 +24,13 @@ mkdir -p build
 cd build
 cmake .. && make || { echo "Node D build failed"; exit 1; }
 
+# Build Node E (C++ server)
+echo "Building Node E (C++ server)..."
+cd ../../nodeE
+mkdir -p build
+cd build
+cmake .. && make || { echo "Node E build failed"; exit 1; }
+
 # Generate Python protobuf files for Node A
 echo "Generating Python protobuf files for Node A..."
 cd "$ORIGINAL_DIR"

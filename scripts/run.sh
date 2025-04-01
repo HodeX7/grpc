@@ -40,6 +40,13 @@ run_in_terminal "NodeD" "$ORIGINAL_DIR/nodes/nodeD" "./build/server"
 # Wait for Node D to start
 sleep 2
 
+# Start Node E (C++ server)
+echo "Starting Node E..."
+run_in_terminal "NodeE" "$ORIGINAL_DIR/nodes/nodeE" "./build/server"
+
+# Wait for Node E to start
+sleep 2
+
 # Start Node A (Python client)
 echo "Starting Node A..."
 run_in_terminal "NodeA" "$ORIGINAL_DIR/nodes/nodeA" "python3 client.py"
