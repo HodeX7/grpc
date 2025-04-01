@@ -394,3 +394,167 @@ Node B implements shared memory using Boost.Interprocess library to maintain sta
    - Add backup mechanisms
    - Implement recovery procedures
    - Enhanced error handling
+
+## Milestone: Shared Memory Integration with Routing Logic
+
+### Overview
+
+In this milestone, we implemented and integrated shared memory functionality with the routing logic in Node B. This enhancement provides persistent state management, improved message tracking, and better monitoring capabilities for the overlay network.
+
+### Implementation Details
+
+1. **Shared Memory Structure**
+
+   ```cpp
+   struct SharedData {
+       int counter;           // Total messages processed
+       int last_target;      // Last target node (C or D)
+       std::vector<int> recent_ids;  // Message history
+   };
+   ```
+
+2. **Key Components**
+
+   - Shared memory segment at `/dev/shm/aksharmehta_counter`
+   - Named mutex for thread-safe access
+   - Persistent state across message processing
+   - Monitoring endpoint for state inspection
+
+3. **Routing Logic Integration**
+   - Messages routed based on ID (odd/even)
+   - State tracking in shared memory
+   - Thread-safe operations with mutex locks
+
+### Purpose and Benefits
+
+1. **State Persistence**
+
+   - Maintains message processing history
+   - Tracks routing decisions
+   - Enables system recovery after restarts
+
+2. **Load Balancing**
+
+   - Consistent routing decisions
+   - Even distribution between nodes C and D
+   - Prevents message loss during processing
+
+3. **Monitoring and Debugging**
+   - Real-time state inspection
+   - Message history tracking
+   - Performance metrics collection
+
+### Achievements
+
+1. **Successfully Implemented**
+
+   - Shared memory initialization and management
+   - Thread-safe state updates
+   - Message history tracking
+   - Monitoring endpoint
+
+2. **Verified Functionality**
+
+   - Correct message routing (odd/even distribution)
+   - State persistence across messages
+   - Proper mutex synchronization
+   - Monitoring capabilities
+
+3. **Current Status**
+   - Node B successfully processes messages
+   - Maintains state in shared memory
+   - Forwards messages to appropriate nodes
+   - Provides monitoring capabilities
+
+### Next Steps
+
+1. **Testing and Validation**
+
+   - Implement comprehensive test suite
+   - Verify concurrent message handling
+   - Test system recovery scenarios
+   - Validate monitoring endpoint
+
+2. **Performance Optimization**
+
+   - Optimize shared memory access patterns
+   - Improve mutex contention handling
+   - Enhance message history management
+   - Fine-tune monitoring overhead
+
+3. **Integration with Other Nodes**
+
+   - Implement similar functionality in Nodes C and D
+   - Add message deduplication
+   - Enhance error handling
+   - Improve logging and monitoring
+
+4. **Documentation and Maintenance**
+   - Document shared memory usage patterns
+   - Create maintenance procedures
+   - Update system architecture diagrams
+   - Prepare deployment guidelines
+
+### Technical Considerations
+
+1. **Security**
+
+   - Shared memory permissions
+   - Access control mechanisms
+   - Data integrity protection
+   - Error handling
+
+2. **Resource Management**
+
+   - Memory allocation
+   - Cleanup procedures
+   - Resource limits
+   - Performance monitoring
+
+3. **Error Handling**
+   - Shared memory failures
+   - Mutex deadlocks
+   - Message processing errors
+   - Recovery procedures
+
+### Next Steps
+
+1. **Integrate Shared Memory with Routing Logic**
+
+   - Ensure that the shared memory implementation is fully integrated with the routing logic in Node B.
+   - Verify that messages are being routed correctly to Nodes C and D based on the shared state.
+
+2. **Implement Monitoring Endpoint**
+
+   - Finalize the `GetSharedState` endpoint to allow external monitoring of the shared memory state.
+   - Ensure that the endpoint provides accurate and real-time data about message processing and routing.
+
+3. **Testing and Validation**
+
+   - Develop a comprehensive test suite to validate the functionality of the shared memory and routing logic.
+   - Conduct tests for concurrent message handling to ensure thread safety and data integrity.
+   - Validate the monitoring endpoint to ensure it returns the correct shared state.
+
+4. **Documentation**
+
+   - Update the project documentation to include details about the shared memory implementation and routing logic.
+   - Document the usage of the monitoring endpoint and how to access shared memory state.
+
+5. **Integration with Other Nodes**
+
+   - Implement similar shared memory functionality in Nodes C and D to maintain consistency across the system.
+   - Ensure that all nodes can communicate effectively and share state as needed.
+
+6. **Performance Optimization**
+
+   - Analyze the performance of the shared memory implementation and identify any bottlenecks.
+   - Optimize memory access patterns and mutex usage to improve overall system performance.
+
+7. **Deployment Preparation**
+
+   - Prepare the system for deployment, ensuring that all nodes are configured correctly.
+   - Create deployment guidelines and instructions for setting up the entire system in a production environment.
+
+8. **Monitoring and Maintenance**
+   - Set up monitoring tools to track the performance and health of the system in real-time.
+   - Establish maintenance procedures to handle potential issues and ensure system reliability.
