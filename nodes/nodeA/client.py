@@ -29,7 +29,7 @@ def run():
     stub = data_pb2_grpc.DataServiceStub(channel)
     
     # Send 5 data points
-    for i in range(1, 6):
+    for i in range(1, 101):
         send_data(stub, i)
         time.sleep(1)  # Add delay between sends
 
