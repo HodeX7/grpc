@@ -595,3 +595,135 @@ In this step, we focused on implementing Node E, which serves as a destination f
 ### Conclusion
 
 This step successfully integrated Node E into the overlay network and established routing logic for data from Nodes C and D. The next steps will focus on implementing monitoring capabilities and ensuring data integrity across the network.
+
+## Recent Enhancements After Implementing Node E
+
+### Overview
+
+Following the successful implementation of Node E and the routing logic for data from Nodes C and D, several enhancements were made to improve the functionality and robustness of the overlay network.
+
+### Key Enhancements
+
+1. **Uniqueness Checks in Node E**:
+
+   - Implemented checks in Node E to reject duplicate IDs. This ensures that Node E only processes unique data messages, preventing data duplication in the system.
+   - The `PushData` method in Node E was updated to include a check using `std::unordered_set<int> stored_ids;` to track received IDs.
+
+   ```cpp
+   if (stored_ids.find(request->id()) != stored_ids.end()) {
+       return grpc::Status::CANCELLED; // Reject duplicate
+   }
+   stored_ids.insert(request->id());
+   ```
+
+2. **Retry Logic in Node B**:
+
+   - Added retry logic in Node B to handle failures when forwarding data to Nodes C and D. If a forwarding attempt fails, Node B will retry sending the data to ensure it is processed correctly.
+
+   ```cpp
+   for (const auto& edge : edges_) {
+       auto channel = grpc::CreateChannel(edge.second, grpc::InsecureChannelCredentials());
+       DataServiceClient client(channel);
+       Status status = client.PushData(*request);
+       if (status.ok()) break; // Stop on success
+   }
+   ```
+
+3. **Enhanced Logging in Nodes C and D**:
+
+   - Improved logging in Nodes C and D to track the flow of data and identify any issues during processing. This includes logging when data is forwarded to Node E and when IDs are stored locally.
+
+   ```cpp
+   std::cout << "Node C: Forwarding ID " << request->id() << " to Node E\n";
+   ```
+
+4. **Testing and Validation**:
+   - Conducted tests to verify the functionality of the uniqueness checks in Node E. The system was tested with both unique and duplicate IDs to ensure proper handling.
+   - Verified that Nodes C and D correctly forward data to Node E and log their actions appropriately.
+
+### Conclusion
+
+These enhancements have improved the robustness and reliability of the overlay network, ensuring that data is processed efficiently and without duplication. The next steps will focus on deploying the nodes across multiple machines and conducting performance testing.
+
+### Next Steps
+
+1. **Deploy Nodes on Multiple Machines**:
+
+   - Set up the physical machines and connect them via a switch/router.
+   - Update the configuration files for each node with the correct IP addresses and ports.
+
+2. **Conduct Edge Case Testing**:
+
+   - Test the system for various edge cases, including:
+     - Sending duplicate IDs to ensure they are correctly rejected by Node E.
+     - Simulating node failures (e.g., killing Node C or D) to verify that data is rerouted correctly.
+
+3. **Perform Performance Testing**:
+
+   - Measure and log the latency for data points as they flow through the network.
+   - Calculate the distribution ratio of data across Nodes C, D, and E to ensure balanced processing.
+
+4. **Enhance Monitoring and Logging**:
+
+   - Implement additional monitoring capabilities to track the health and performance of each node.
+   - Ensure that all nodes log relevant information for debugging and analysis.
+
+5. **Update Documentation**:
+
+   - Revise the `README.md` file to include:
+     - Instructions for running nodes on multiple machines.
+     - Details about the shared memory implementation and routing logic.
+     - Guidelines for testing data uniqueness and distribution.
+
+6. **Implement Data Persistence**:
+
+   - Consider adding functionality to persist data in Node E to ensure that it can recover from failures without losing important information.
+
+7. **Prepare for Final Review**:
+
+   - Conduct a final review of the entire system to ensure all components are functioning as expected and meet project requirements.
+
+   ```
+
+   ```
+
+8. **Save the Changes**:
+   - After appending the content, save the `README.md` file.
+
+### Summary of Next Steps
+
+This addition outlines the critical next steps needed to further develop and finalize your overlay network project. If you have any further adjustments or additional tasks to include, let me know! Otherwise, you can proceed with the next steps as outlined.
+
+## Retry Logic in B + Adjusted Hashing
+
+### Overlay Structure Update
+
+- **Revised Data Flow**: The routing structure has been updated to ensure compliance with the overlay network design:
+  - **Previous Structure**: Node B could directly forward data to Node E.
+  - **New Structure**: Data now flows from Node A → Node B → {Node C, Node D} → Node E. This maintains the hierarchical structure and ensures that Node B only forwards data to Nodes C and D, which then handle the routing to Node E.
+
+### Hashing Logic Clarification
+
+- **Node B**: Uses `id % 2` to split traffic between Nodes C and D:
+  - `0 → C`
+  - `1 → D`
+- **Node C**: Uses `id % 3` to determine whether to store or forward data:
+
+  - Stores data if `id % 3 == 1`
+  - Forwards data to Node E if `id % 3 == 0`
+
+- **Node D**: Similar to Node C, uses `id % 3`:
+  - Stores data if `id % 3 == 2`
+  - Forwards data to Node E if `id % 3 == 0`
+
+### Retry Logic Implementation
+
+- **Node B**: Implemented retry logic for forwarding data to Nodes C and D. If the initial attempt to forward data fails, Node B will retry up to three times with a short delay between attempts.
+
+### Duplicate Data Logging
+
+- Added logging in Nodes C and D to track duplicate data. If a duplicate ID is detected, the node will log a message and reject the data, ensuring that each ID is stored only once across the nodes.
+
+### Conclusion
+
+These changes enhance the robustness and compliance of the overlay network with the project requirements, ensuring efficient data routing and storage.

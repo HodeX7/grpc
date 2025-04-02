@@ -1,3 +1,4 @@
+//NODE D
 #include <grpcpp/grpcpp.h>
 #include "data.grpc.pb.h"
 #include <iostream>
@@ -31,7 +32,7 @@ public:
         int hash = request->id() % 3;
 
         if (hash != 2) { // Not D's responsibility
-            // Forward to Node E
+            // Forward to E
             auto channel = grpc::CreateChannel("localhost:50054", grpc::InsecureChannelCredentials());
             std::unique_ptr<DataService::Stub> client(DataService::NewStub(channel));
             grpc::ClientContext client_context;  // Create a ClientContext
@@ -41,7 +42,7 @@ public:
             // Store locally
             std::cout << "Node D: Stored ID " << request->id() << "\n";
         }
-        return Status::OK;
+        return Status::OK; 
     }
 };
 

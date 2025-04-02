@@ -1,3 +1,4 @@
+//NODE E
 #include <iostream>
 #include <string>
 #include <grpcpp/grpcpp.h>
@@ -8,6 +9,9 @@ class DataServiceImpl final : public data::DataService::Service {
 public:
     std::unordered_set<int> stored_ids;
     grpc::Status PushData(grpc::ServerContext* context, const data::DataMessage* request, data::Empty* response) override {
+        if (request->id() % 3 != 0) {
+            return grpc::Status::CANCELLED; // Reject invalid data
+        }
         if (stored_ids.find(request->id()) != stored_ids.end()) {
             return grpc::Status::CANCELLED;
         }

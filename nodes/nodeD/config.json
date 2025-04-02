@@ -2,5 +2,8 @@
   "id": "D",
   "ip": "localhost",
   "port": 50053,
-  "edges": []
+  "edges": [
+    { "id": "E", "ip": "localhost", "port": 50054 },
+    { "id": "C", "ip": "localhost", "port": 50052 }
+  ]
 }

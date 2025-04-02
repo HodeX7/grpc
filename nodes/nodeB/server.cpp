@@ -1,3 +1,4 @@
+//NODE B
 #include <grpcpp/grpcpp.h>
 #include "data.grpc.pb.h"
 #include <iostream>
@@ -14,6 +15,7 @@
 #include <pwd.h>
 #include <unistd.h>
 #include <map>
+#include <thread>
 
 using grpc::Server;
 using grpc::ServerBuilder;
@@ -95,22 +97,30 @@ class DataServiceImpl final : public DataService::Service {
       std::lock_guard<boost::interprocess::named_mutex> lock(*mutex_);
       
       // Determine target node based on data ID
-      int target = request->id() % 2;  // 0 for C, 1 for D
-      std::string target_address = target == 0 ? edges_["C"] : edges_["D"];
+      int target = request->id() % 2; // 0 → C, 1 → D
+      std::string target_address = (target == 0) ? edges_["C"] : edges_["D"];
       
       // Create channel and stub for target node
       auto channel = grpc::CreateChannel(target_address, grpc::InsecureChannelCredentials());
       auto stub = data::DataService::NewStub(channel);
       
-      // Forward data to target node
-      std::unique_ptr<grpc::ClientContext> client_context = std::make_unique<grpc::ClientContext>();
-      data::Empty forward_response;
-      Status status = stub->PushData(client_context.get(), *request, &forward_response);
-      
-      if (!status.ok()) {
-        std::cerr << "Failed to forward data to " << (target == 0 ? "C" : "D") << ": " << status.error_message() << std::endl;
-        return status;
-      }
+      // Forward data to target node with retry logic
+        const int max_retries = 3; // Set the maximum number of retries
+        for (int attempt = 0; attempt < max_retries; ++attempt) {
+            grpc::ClientContext client_context;
+            data::Empty forward_response;
+            Status status = stub->PushData(&client_context, *request, &forward_response);
+            
+            if (status.ok()) {
+                // Successfully forwarded data
+                break; // Exit the retry loop
+            } else {
+                std::cerr << "Attempt " << (attempt + 1) << " failed to forward data to " << target_address 
+                          << ": " << status.error_message() << std::endl;
+                // Optionally, you can add a delay before retrying
+                std::this_thread::sleep_for(std::chrono::milliseconds(100)); // Delay before retrying
+            }
+        }
       
       // Update shared memory state
       shared_data_->counter++;
@@ -124,13 +134,15 @@ class DataServiceImpl final : public DataService::Service {
       
       // Log the state
       std::cout << "NodeB: Shared memory state - counter: " << shared_data_->counter 
-                << ", last_target: " << (target == 0 ? "C" : "D")
+                << ", last_target: " << target_address
                 << ", recent IDs: [";
       for (size_t i = 0; i < shared_data_->recent_ids.size(); ++i) {
         std::cout << shared_data_->recent_ids[i];
         if (i < shared_data_->recent_ids.size() - 1) std::cout << ", ";
       }
       std::cout << "]" << std::endl;
+      
+      std::cout << "NodeB: Forwarding ID " << request->id() << " to " << target_address << "\n";
       
       return Status::OK;
     } catch (const std::exception& e) {
