@@ -10,13 +10,16 @@ def load_config():
         return json.load(f)
 
 def send_data(stub, id):
-    data = data_pb2.DataMessage(
-        id=id,
-        payload=b"SampleData",
-        timestamp=str(time.time())
-    )
-    stub.PushData(data)
-    print(f"Sent data ID: {id}")
+    try:
+        data = data_pb2.DataMessage(
+            id=id,
+            payload=b"SampleData",
+            timestamp=str(time.time())
+        )
+        stub.PushData(data)
+        print(f"Sent data ID: {id}")
+    except grpc.RpcError as e:
+        print(f"Failed to send data ID {id}: {e}")
 
 def run():
     # Load configuration
@@ -29,9 +32,13 @@ def run():
     stub = data_pb2_grpc.DataServiceStub(channel)
     
     # Send 5 data points
-    for i in range(1, 101):
+    for i in range(1, 11):
         send_data(stub, i)
         time.sleep(1)  # Add delay between sends
+        
+    # Send duplicate IDs
+    for _ in range(5):
+        send_data(stub, 5)  # Sending duplicate ID 50
 
 if __name__ == '__main__':
     run()

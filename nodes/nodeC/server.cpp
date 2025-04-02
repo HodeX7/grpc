@@ -35,6 +35,7 @@ public:
             auto channel = grpc::CreateChannel("localhost:50054", grpc::InsecureChannelCredentials());
             std::unique_ptr<DataService::Stub> client(DataService::NewStub(channel));
             grpc::ClientContext client_context;  // Create a ClientContext
+            std::cout << "Node C: Forwarding ID " << request->id() << " to Node E\n";
             client->PushData(&client_context, *request, reply);  // Pass the ClientContext
         } else {
             // Store locally

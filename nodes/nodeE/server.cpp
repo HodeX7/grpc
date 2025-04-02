@@ -2,10 +2,16 @@
 #include <string>
 #include <grpcpp/grpcpp.h>
 #include "data.grpc.pb.h"
+#include <unordered_set>
 
 class DataServiceImpl final : public data::DataService::Service {
 public:
+    std::unordered_set<int> stored_ids;
     grpc::Status PushData(grpc::ServerContext* context, const data::DataMessage* request, data::Empty* response) override {
+        if (stored_ids.find(request->id()) != stored_ids.end()) {
+            return grpc::Status::CANCELLED;
+        }
+        stored_ids.insert(request->id());
         std::cout << "Node E: Received ID " << request->id() << "\n";
         // Store the received data (you can implement storage logic here)
         return grpc::Status::OK;
